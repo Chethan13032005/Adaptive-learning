@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Progress Dashboard - Adaptive AI Tutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <div class="container">
+    <h2>Progress Dashboard Demo</h2>
+    <p>
+      Track your learning journey and celebrate achievements!
+    </p>
+    <div class="lesson-card" style="margin-top:1.5rem;">
+      <div style="margin-bottom:1rem;">
+        <b>Topics Completed:</b>
+        <ul id="topicsList">
+          <li>Fractions</li>
+          <li>Photosynthesis</li>
+          <li>World War II</li>
+        </ul>
+      </div>
+      <div>
+        <b>Achievements:</b>
+        <ul>
+          <li>🏅 First Lesson Completed</li>
+          <li>🎯 7-Day Learning Streak</li>
+          <li>🌟 Helped Your Buddy</li>
+        </ul>
+      <!-- ...existing HTML code... -->
+      </div>
+      <!-- Add this after the Achievements section, inside .lesson-card -->
+      <div id="agentMessage" class="buddy-message" style="margin-top:1.5rem;"></div>
+      <button onclick="addTopic()">Add Random Topic</button>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="agentic-ai.js"></script>
+  <script src="nav.js"></script>
+  <!-- Add your agentic AI script logic here -->
+  <!-- Inside feature-progress.html -->
+<script src="nav.js"></script>
+<script src="agentic-ai.js"></script>
+<script>
+  function addTopic() {
+    const topics = ["Decimals", "Gravity", "The Solar System", "Photosynthesis", "Fractions", "Electricity"];
+    const topic = topics[Math.floor(Math.random() * topics.length)];
+    const ul = document.getElementById('topicsList');
+    const li = document.createElement('li');
+    li.textContent = topic;
+    ul.appendChild(li);
+    agenticSuggestion();
+  }
+
+  function agenticSuggestion() {
+    const ul = document.getElementById('topicsList');
+    const count = ul.getElementsByTagName('li').length;
+    document.getElementById('agentMessage').innerHTML = agenticProgressSuggestion(count);
+  }
+
+  window.onload = function() {
+    if (typeof setActiveNav === "function") setActiveNav();
+    agenticSuggestion();
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adaptive AI Tutor - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .main-logo {
+      height: 120px;
+      display: block;
+      margin: 2rem auto 1rem auto;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px #00c3ff33;
+    }
+    .welcome-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .welcome-header h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      color: #00c3ff;
+      letter-spacing: 1px;
+    }
+    .feature-img {
+      display: block;
+      margin: 2rem auto 1rem auto;
+      max-width: 420px;
+      width: 90%;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #0002;
+    }
+    .try-multimodal-btn {
+      display: block;
+      margin: 2rem auto 1rem auto;
+      background: #00c3ff;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #00c3ff22;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .try-multimodal-btn:hover {
+      background: #ff6a00;
+    }
+    @media (max-width: 700px) {
+      .main-logo { height: 70px; }
+      .welcome-header h1 { font-size: 1.2rem; }
+      .feature-img { max-width: 98%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo" style="text-align:center;">
+    <img src="logo.png" alt="AI Tutor Logo" class="main-logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <div class="container">
+    <div class="welcome-header">
+      <img src="logo.png" alt="AI Tutor Logo" style="height:60px;">
+      <h1>Welcome to Adaptive Neurodiverse AI Tutor</h1>
+    </div>
+    <p style="text-align:center;">
+      Empowering neurodiverse learners with personalized, agentic AI tutoring.<br>
+      Explore our features, learn about our mission, and see the impact!
+    </p>
+    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80" alt="Neurodiverse Learning" class="feature-img">
+
+    <button class="try-multimodal-btn" onclick="window.location.href='feature-multimodal.html'">
+      🎓 Try Multi-Modal Learning Demo
+    </button>
+  </div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="agentic-ai.js"></script>
+  <script src="nav.js"></script>
+</body>
+</html>

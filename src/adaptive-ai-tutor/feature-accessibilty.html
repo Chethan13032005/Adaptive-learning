@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessibility - Adaptive AI Tutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <div class="container">
+    <h2>Accessibility Demo</h2>
+    <p>
+      Try changing font size and color contrast for better accessibility.
+    </p>
+    <div class="lesson-card" style="margin-top:1.5rem;">
+      <label for="fontSizeRange"><b>Font Size:</b></label>
+      <input type="range" id="fontSizeRange" min="14" max="28" value="16" oninput="changeFontSize(this.value)">
+      <span id="fontSizeValue">16</span>px
+      <br><br>
+      <button onclick="toggleContrast()">Toggle High Contrast</button>
+      <div id="accessText" style="margin-top:1.5rem;">
+        <p>This text will change size and contrast based on your settings.</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="agentic-ai.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    function changeFontSize(val) {
+      document.getElementById('accessText').style.fontSize = val + 'px';
+      document.getElementById('fontSizeValue').textContent = val;
+    }
+    function toggleContrast() {
+      const el = document.getElementById('accessText');
+      if (el.style.backgroundColor === 'black') {
+        el.style.backgroundColor = '';
+        el.style.color = '';
+      } else {
+        el.style.backgroundColor = 'black';
+        el.style.color = 'yellow';
+      }
+    }
+  </script>
+</body>
+</html>

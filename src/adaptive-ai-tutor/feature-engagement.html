@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emotion & Engagement Sensing - Adaptive AI Tutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <div class="container">
+    <h2>Emotion & Engagement Sensing Demo</h2>
+    <p>
+      Simulate your engagement and mood. The AI will adapt its response!
+    </p>
+    <div class="lesson-card" style="margin-top:1.5rem;">
+      <div class="controls">
+        <label>How long did you take to answer? (seconds)</label>
+        <input type="number" id="responseTime" min="1" max="120" value="10" style="width:80px;">
+        <label>Your mood:</label>
+        <select id="sentiment">
+          <option value="positive">😊 Positive</option>
+          <option value="neutral">😐 Neutral</option>
+          <option value="negative">😞 Negative</option>
+        </select>
+        <button onclick="analyzeEngagement()">Analyze</button>
+      </div>
+      <div id="engagementOutput" style="margin-top:1rem;"></div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="agentic-ai.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    function analyzeEngagement() {
+      const time = parseInt(document.getElementById('responseTime').value, 10);
+      const sentiment = document.getElementById('sentiment').value;
+      let status = '';
+      let advice = '';
+      if (sentiment === 'negative' || time > 30) {
+        status = '😞 Frustrated';
+        advice = "Let's slow down and try a different approach!";
+      } else if (time < 5) {
+        status = '😐 Distracted';
+        advice = "Let's take a short break or try a quick game!";
+      } else {
+        status = '😊 Engaged';
+        advice = "Great job! Keep going!";
+      }
+      document.getElementById('engagementOutput').innerHTML =
+        `<b>Status:</b> ${status}<br><b>AI Suggestion:</b> ${advice}`;
+    }
+  </script>
+</body>
+</html>

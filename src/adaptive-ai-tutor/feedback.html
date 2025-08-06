@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback - Adaptive AI Tutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <!-- Only the form part for feedback.html -->
+<div class="feedback-form">
+  <h2 style="text-align:center; margin-bottom:1rem;">
+    <span style="font-size:2rem;">💬</span> We Value Your Feedback
+  </h2>
+  <form id="feedbackForm" onsubmit="return submitFeedback(event)">
+    <div id="feedbackSuccess" class="success-msg" style="display:none;">Thank you for your feedback!</div>
+    <label for="name"><span style="font-size:1.2rem;">👤</span> Name (optional):</label>
+    <input type="text" id="name" name="name" maxlength="40" placeholder="Your name">
+    <label for="feedback"><span style="font-size:1.2rem;">📝</span> Your Feedback:</label>
+    <textarea id="feedback" name="feedback" rows="4" required maxlength="500" placeholder="Share your thoughts..."></textarea>
+    <button type="submit"><span style="font-size:1.2rem;">🚀</span> Submit</button>
+  </form>
+</div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="agentic-ai.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    function submitFeedback(event) {
+      event.preventDefault();
+      document.getElementById('feedbackSuccess').style.display = 'block';
+      document.getElementById('feedbackForm').reset();
+      setTimeout(() => {
+        document.getElementById('feedbackSuccess').style.display = 'none';
+      }, 3000);
+      return false;
+    }
+  </script>
+</body>
+</html>

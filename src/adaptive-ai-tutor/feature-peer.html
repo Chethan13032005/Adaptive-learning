@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gamified Peer Agent - Adaptive AI Tutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <div class="container">
+    <h2>Gamified Peer Agent Demo</h2>
+    <p>
+      Meet your AI buddy! Teach your buddy a topic or solve a puzzle together.
+    </p>
+    <div class="lesson-card" style="margin-top:1.5rem;">
+      <div class="controls">
+        <input type="text" id="buddyTopic" placeholder="Topic to teach (e.g. Fractions)">
+        <button onclick="teachBuddy()">Teach Buddy</button>
+        <button onclick="solvePuzzle()">Solve Puzzle</button>
+      </div>
+      <div id="buddyOutput" style="margin-top:1rem;"></div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="agentic-ai.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    function teachBuddy() {
+      const topic = document.getElementById('buddyTopic').value.trim() || 'Fractions';
+      document.getElementById('buddyOutput').innerHTML =
+        `🤖 <b>Buddy:</b> Wow! Can you explain <b>${topic}</b> to me in your own words?`;
+    }
+    function solvePuzzle() {
+      const puzzles = [
+        "What is 1/2 + 1/4?",
+        "Spell 'accommodation' backwards!",
+        "What comes next: 2, 4, 8, ...?",
+        "If you have 3 apples and give 1 to your friend, how many are left?"
+      ];
+      const puzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+      document.getElementById('buddyOutput').innerHTML =
+        `🧩 <b>Buddy:</b> Let's solve this together: <b>${puzzle}</b>`;
+    }
+  </script>
+</body>
+</html>

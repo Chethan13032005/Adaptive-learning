@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Core Learning Features - Adaptive AI Tutor</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .video-embed { margin: 1.5rem auto; display: block; max-width: 480px; width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);}
+    .hint-section { margin-top: 2rem; background: #f0f8ff; border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);}
+    .hint-btn { background: #00c3ff; color: #fff; border: none; border-radius: 8px; padding: 0.5rem 1.2rem; font-size: 1rem; cursor: pointer; margin-bottom: 1rem;}
+    .hint-btn:hover { background: #ff6a00;}
+    .ai-chat { margin-top: 2rem; background: #fffbe7; border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);}
+    .ai-chat input, .ai-chat button { font-size: 1rem; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc; margin-right: 0.5rem;}
+    .ai-chat button { background: #00c3ff; color: #fff; border: none;}
+    .ai-chat button:hover { background: #ff6a00;}
+    .ai-chat-history { margin-top: 1rem; max-height: 180px; overflow-y: auto;}
+    .ai-msg { margin-bottom: 0.7rem; }
+    .ai-msg.user { color: #00c3ff; }
+    .ai-msg.ai { color: #222; }
+    .teach-back-section { margin-top: 2rem; background: #e0f7fa; border-radius: 12px; padding: 1rem;}
+    .teach-back-section input, .teach-back-section button { font-size: 1rem; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc; margin-right: 0.5rem;}
+    .teach-back-section button { background: #00c3ff; color: #fff; border: none;}
+    .teach-back-section button:hover { background: #ff6a00;}
+    .step-section { margin-top: 1rem; }
+    .step { margin-bottom: 0.5rem; }
+    .agentic-suggestion { margin-top: 1.5rem; background: #e3ffe3; border-radius: 10px; padding: 1rem; color: #1a4d1a; font-weight: bold;}
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <div class="container">
+    <h2>Core Learning Features Demo</h2>
+    <p>
+      Try all core learning features: multi-modal lessons, adaptive delivery, AI chat, peer buddy, hints, and step-by-step help!
+    </p>
+    <!-- Multi-Modal Lesson -->
+    <div class="lesson-card" id="lessonCard" style="margin-top:1.5rem;">
+      <div class="controls">
+        <input type="text" id="topicInput" placeholder="e.g. Fractions" />
+        <select id="modeSelect">
+          <option value="audio">Audio</option>
+          <option value="visual">Visual</option>
+          <option value="video">Video</option>
+          <option value="structured">Structured</option>
+          <option value="simulation">Simulation</option>
+        </select>
+        <button onclick="fetchLesson()">Teach Me</button>
+        <button id="pauseBtn" onclick="pauseAudio()" style="display:none;background:#00c3ff;">Pause Audio</button>
+      </div>
+      <div id="lessonOutput" style="margin-top:1rem;"></div>
+      <div id="agenticSuggestion" class="agentic-suggestion" style="display:none;"></div>
+    </div>
+    <div class="buddy-message" id="buddyMsg" style="display:none;"></div>
+
+    <!-- AI Tutor Chat -->
+    <div class="ai-chat">
+      <b>AI Tutor Chat (Explain / Reteach):</b><br>
+      <div class="ai-chat-history" id="chatHistory"></div>
+      <input type="text" id="chatInput" placeholder="Ask a question or type 'reteach fractions'">
+      <button onclick="aiChatSend()">Send</button>
+    </div>
+
+    <!-- Gamified Peer AI Buddy -->
+    <div class="teach-back-section">
+      <b>Peer AI Buddy: Teach-Back</b><br>
+      <span id="buddyPrompt">🤖 Buddy: Can you explain <b>Fractions</b> to me?</span><br>
+      <input type="text" id="teachBackInput" placeholder="Explain in your words">
+      <button onclick="teachBack()">Submit</button>
+      <div id="teachBackFeedback"></div>
+    </div>
+
+    <!-- Hints & Step-by-Step Breakdown -->
+    <div class="hint-section">
+      <button class="hint-btn" onclick="showHint()">Show Hint</button>
+      <button class="hint-btn" onclick="showSteps()">Step-by-Step</button>
+      <div id="hintOutput"></div>
+      <div id="stepOutput" class="step-section"></div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="agentic-ai.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    // --- Agentic AI State ---
+    let currentUtter = null;
+    let userProfile = JSON.parse(localStorage.getItem('neuroProfile') || '{"mode":"visual"}');
+    let hintCount = 0;
+    let reteachCount = 0;
+    let teachBackSuccess = 0;
+    let lastMode = userProfile.mode || 'visual';
+
+    document.getElementById('modeSelect').value = lastMode;
+
+    function showBuddyMessage(topic) {
+      const buddy = document.getElementById('buddyMsg');
+      buddy.innerText = `👋 Hi! I'm your learning buddy. Can you explain "${topic}" to me after you learn it?`;
+      buddy.style.display = 'block';
+      document.getElementById('buddyPrompt').innerHTML = `🤖 Buddy: Can you explain <b>${topic}</b> to me?`;
+    }
+
+    function pauseAudio() {
+      window.speechSynthesis.cancel();
+      document.getElementById('pauseBtn').style.display = 'none';
+    }
+
+    function showAgenticSuggestion(msg) {
+      const sug = document.getElementById('agenticSuggestion');
+      sug.innerHTML = msg;
+      sug.style.display = 'block';
+    }
+
+    function hideAgenticSuggestion() {
+      document.getElementById('agenticSuggestion').style.display = 'none';
+    }
+
+    async function fetchLesson() {
+      const topic = document.getElementById('topicInput').value.trim() || 'Fractions';
+      const mode = document.getElementById('modeSelect').value;
+      userProfile.mode = mode;
+      localStorage.setItem('neuroProfile', JSON.stringify(userProfile));
+      const output = document.getElementById('lessonOutput');
+      output.innerHTML = 'Loading...';
+      document.getElementById('buddyMsg').style.display = 'none';
+      document.getElementById('pauseBtn').style.display = 'none';
+      hideAgenticSuggestion();
+
+      try {
+        const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topic)}`);
+        if (!res.ok) throw new Error('Lesson fetch failed');
+        const data = await res.json();
+        const content = data.extract || 'No lesson found.';
+        let imgHtml = '';
+        if (mode === 'visual') {
+          if (data.thumbnail && data.thumbnail.source) {
+            imgHtml = `<img src="${data.thumbnail.source}" alt="Visual Aid" class="lesson-image">`;
+          } else {
+            imgHtml = `<img src="https://placehold.co/400x200?text=${encodeURIComponent(content.slice(0,20))}" alt="Visual Aid" class="lesson-image">`;
+          }
+          output.innerHTML = `${imgHtml}<div>${content}</div>`;
+        } else if (mode === 'audio') {
+          output.innerHTML = `<b>Playing audio:</b> <br>${content}`;
+          const synth = window.speechSynthesis;
+          if (synth.speaking) synth.cancel();
+          const utter = new SpeechSynthesisUtterance(content);
+          utter.rate = 1;
+          utter.pitch = 1;
+          utter.onend = () => {
+            output.innerHTML += "<br><i>Audio finished.</i>";
+            document.getElementById('pauseBtn').style.display = 'none';
+          };
+          currentUtter = utter;
+          synth.speak(utter);
+          document.getElementById('pauseBtn').style.display = 'inline-block';
+        } else if (mode === 'video') {
+          output.innerHTML = `<iframe class="video-embed" src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(topic)} lesson" allowfullscreen></iframe>
+          <div>${content}</div>`;
+        } else if (mode === 'simulation') {
+          if (topic.toLowerCase().includes('fraction')) {
+            output.innerHTML = `<iframe class="video-embed" src="https://www.youtube.com/embed/6pRisk5U0GA" title="Fractions for Kids" allowfullscreen></iframe>
+<div>${content}</div>`;
+          } else {
+            output.innerHTML = `<a href="https://phet.colorado.edu/en/simulations/category/math" target="_blank">🔗 Try a math simulation on PhET</a><div>${content}</div>`;
+          }
+        } else {
+          output.innerHTML = `<b>Structured Lesson:</b><div class="structured">${content}</div>`;
+        }
+        showBuddyMessage(topic);
+
+        // Agentic suggestion: If user keeps using same mode, suggest trying another
+        if (lastMode === mode) {
+          showAgenticSuggestion(`🤖 Tip: If this mode isn't helping, try switching to <b>${mode === 'visual' ? 'audio' : 'visual'}</b> or <b>video</b> for a different perspective!`);
+        } else {
+          hideAgenticSuggestion();
+        }
+        lastMode = mode;
+      } catch (e) {
+        output.innerHTML = 'Could not fetch lesson.';
+      }
+    }
+
+    // --- AI Tutor Chat (Agentic) ---
+    function aiChatSend() {
+      const input = document.getElementById('chatInput');
+      const history = document.getElementById('chatHistory');
+      const userMsg = input.value.trim();
+      if (!userMsg) return;
+      history.innerHTML += `<div class="ai-msg user">🧑: ${userMsg}</div>`;
+      input.value = '';
+      let aiResponse = '';
+      let lower = userMsg.toLowerCase();
+
+      // Agentic adaptation
+      if (/reteach/.test(lower)) {
+        reteachCount++;
+        if (reteachCount > 2) {
+          aiResponse = "I notice you asked for reteaching several times. Would you like to try a different mode or get a step-by-step breakdown?";
+          showAgenticSuggestion("🤖 Suggestion: Try 'Step-by-Step' or switch lesson mode for a new approach!");
+        } else if (/fraction/.test(lower)) {
+          aiResponse = "Sure! Fractions represent parts of a whole. For example, 1/2 means one out of two equal parts.";
+        } else {
+          aiResponse = "Of course! Let me reteach that for you. What part is most confusing?";
+        }
+      } else if (/hint/.test(lower)) {
+        hintCount++;
+        if (hintCount > 2) {
+          aiResponse = "You've asked for several hints. Would you like to see the full solution step-by-step?";
+          showAgenticSuggestion("🤖 Suggestion: Click 'Step-by-Step' for a detailed breakdown!");
+        } else {
+          aiResponse = "Try breaking the problem into smaller steps. What do you know already?";
+        }
+      } else if (/explain/.test(lower)) {
+        aiResponse = "I'd be happy to explain! Please tell me what you find confusing.";
+      } else if (/mode|audio|visual|video|structured|simulation/.test(lower)) {
+        aiResponse = "You can switch lesson modes using the dropdown above for a different learning experience!";
+      } else {
+        aiResponse = "I'm here to help! Ask me to explain, reteach, or give a hint on any topic.";
+      }
+      setTimeout(() => {
+        history.innerHTML += `<div class="ai-msg ai">🤖: ${aiResponse}</div>`;
+        history.scrollTop = history.scrollHeight;
+      }, 600);
+    }
+
+    // --- Gamified Peer AI Buddy (Agentic) ---
+    function teachBack() {
+      const input = document.getElementById('teachBackInput');
+      const feedback = document.getElementById('teachBackFeedback');
+      const answer = input.value.trim().toLowerCase();
+      if (!answer) return;
+      if (answer.includes('part') && answer.includes('whole')) {
+        teachBackSuccess++;
+        feedback.innerHTML = "🎉 Buddy: That's a great explanation! You really understand fractions!";
+        if (teachBackSuccess > 1) {
+          showAgenticSuggestion("🤖 Awesome! Want to try teaching me a new topic?");
+        }
+      } else if (answer.length > 20) {
+        feedback.innerHTML = "👍 Buddy: Good effort! Try to mention 'parts' and 'whole' in your explanation.";
+      } else {
+        feedback.innerHTML = "🤔 Buddy: Can you try explaining it in a bit more detail?";
+      }
+      input.value = '';
+    }
+
+    // --- Hints & Step-by-Step Breakdown ---
+    function showHint() {
+      hintCount++;
+      document.getElementById('hintOutput').innerHTML = "Hint: A fraction is a way to represent a part of a whole. The top number is called the numerator, and the bottom is the denominator.";
+      document.getElementById('stepOutput').innerHTML = '';
+      if (hintCount > 2) {
+        showAgenticSuggestion("🤖 Need more help? Try 'Step-by-Step' for a detailed solution or switch lesson mode.");
+      }
+    }
+    function showSteps() {
+      const steps = [
+        "1️⃣ Identify the numerator (top number) and denominator (bottom number).",
+        "2️⃣ The denominator tells you how many equal parts the whole is divided into.",
+        "3️⃣ The numerator tells you how many parts you have.",
+        "4️⃣ To add fractions, make sure denominators are the same.",
+        "5️⃣ Add the numerators, keep the denominator the same."
+      ];
+      document.getElementById('stepOutput').innerHTML = steps.map(s => `<div class="step">${s}</div>`).join('');
+      document.getElementById('hintOutput').innerHTML = '';
+      showAgenticSuggestion("🤖 Great! Step-by-step solutions can help you master tough topics.");
+    }
+
+    // --- On page load, show default lesson ---
+    window.onload = function() {
+      if (typeof setActiveNav === "function") setActiveNav();
+      fetchLesson();
+    };
+  </script>
+</body>
+</html>
