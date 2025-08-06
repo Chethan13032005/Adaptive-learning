@@ -17,6 +17,22 @@
     <a href="feedback.html">Feedback</a>
     <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
   </nav>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUpFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .topic-item { animation: slideUpFadeIn 0.5s ease-out; }
+  </style>
   <div class="container">
     <h2>Progress Dashboard Demo</h2>
     <p>
@@ -34,9 +50,9 @@
       <div>
         <b>Achievements:</b>
         <ul>
-          <li>🏅 First Lesson Completed</li>
-          <li>🎯 7-Day Learning Streak</li>
-          <li>🌟 Helped Your Buddy</li>
+          <li class="achievement-icon">🏅 First Lesson Completed</li>
+          <li class="achievement-icon">🎯 7-Day Learning Streak</li>
+          <li class="achievement-icon">🌟 Helped Your Buddy</li>
         </ul>
       <!-- ...existing HTML code... -->
       </div>
@@ -61,6 +77,7 @@
     const ul = document.getElementById('topicsList');
     const li = document.createElement('li');
     li.textContent = topic;
+    li.classList.add('topic-item'); // Add class for animation
     ul.appendChild(li);
     agenticSuggestion();
   }
@@ -70,10 +87,16 @@
     const count = ul.getElementsByTagName('li').length;
     document.getElementById('agentMessage').innerHTML = agenticProgressSuggestion(count);
   }
+  
+  function animateAchievements() {
+    const achievementIcons = document.querySelectorAll('.achievement-icon');
+    achievementIcons.forEach(icon => icon.style.animation = 'pulse 1.5s infinite ease-in-out');
+  }
 
   window.onload = function() {
     if (typeof setActiveNav === "function") setActiveNav();
     agenticSuggestion();
+    animateAchievements(); // Animate achievements on load
   };
 </script>
 </body>

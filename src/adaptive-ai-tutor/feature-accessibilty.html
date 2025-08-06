@@ -40,11 +40,20 @@
   <script src="nav.js"></script>
   <script>
     function changeFontSize(val) {
-      document.getElementById('accessText').style.fontSize = val + 'px';
+      const accessText = document.getElementById('accessText');
+      accessText.style.transition = 'font-size 0.3s ease-in-out'; // Add transition
+ accessText.style.fontSize = val + 'px';
       document.getElementById('fontSizeValue').textContent = val;
+      // Remove transition after animation completes to avoid interference
+      setTimeout(() => { accessText.style.transition = ''; }, 300);
     }
+
     function toggleContrast() {
       const el = document.getElementById('accessText');
+      // Add fade-out effect
+      el.style.transition = 'opacity 0.3s ease-in-out';
+      el.style.opacity = 0;
+
       if (el.style.backgroundColor === 'black') {
         el.style.backgroundColor = '';
         el.style.color = '';
@@ -52,6 +61,11 @@
         el.style.backgroundColor = 'black';
         el.style.color = 'yellow';
       }
+
+      // Add fade-in effect after a short delay
+      setTimeout(() => {
+        el.style.opacity = 1;
+      }, 50); // Small delay for the transition to be visible
     }
   </script>
 </body>

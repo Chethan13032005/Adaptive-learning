@@ -4,6 +4,24 @@
   <meta charset="UTF-8">
   <title>About Us - Adaptive AI Tutor</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .container {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+      animation-delay: 0.5s; /* Delay fade-in slightly after page load */
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    .about-img {
+      transition: transform 0.3s ease-in-out; /* Add transition for smooth zoom */
+    }
+    .about-img:hover {
+      transform: scale(1.05); /* Zoom in slightly on hover */
+    }
+  </style>
 </head>
 <body>
   <div class="logo">

@@ -6,6 +6,18 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <style>
+    @keyframes pulse-red {
+      0% { background-color: rgba(255, 0, 0, 0.1); }
+      50% { background-color: rgba(255, 0, 0, 0.3); }
+      100% { background-color: rgba(255, 0, 0, 0.1); }
+    }
+    @keyframes pulse-green {
+      0% { background-color: rgba(0, 255, 0, 0.1); }
+      50% { background-color: rgba(0, 255, 0, 0.3); }
+      100% { background-color: rgba(0, 255, 0, 0.1); }
+    }
+  </style>
   <div class="logo">
     <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
   </div>
@@ -23,6 +35,7 @@
       Simulate your engagement and mood. The AI will adapt its response!
     </p>
     <div class="lesson-card" style="margin-top:1.5rem;">
+      <div id="engagementFeedback" style="min-height: 80px; padding: 15px; border-radius: 8px; transition: all 0.5s ease-in-out;">
       <div class="controls">
         <label>How long did you take to answer? (seconds)</label>
         <input type="number" id="responseTime" min="1" max="120" value="10" style="width:80px;">
@@ -36,6 +49,7 @@
       </div>
       <div id="engagementOutput" style="margin-top:1rem;"></div>
     </div>
+      </div>
   </div>
   <footer>
     &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
@@ -51,15 +65,29 @@
       if (sentiment === 'negative' || time > 30) {
         status = '😞 Frustrated';
         advice = "Let's slow down and try a different approach!";
+        updateEngagementFeedback('frustrated');
       } else if (time < 5) {
         status = '😐 Distracted';
         advice = "Let's take a short break or try a quick game!";
+        updateEngagementFeedback('distracted');
       } else {
         status = '😊 Engaged';
         advice = "Great job! Keep going!";
+        updateEngagementFeedback('engaged');
       }
       document.getElementById('engagementOutput').innerHTML =
         `<b>Status:</b> ${status}<br><b>AI Suggestion:</b> ${advice}`;
+    }
+
+    function updateEngagementFeedback(status) {
+      const feedbackDiv = document.getElementById('engagementFeedback');
+      feedbackDiv.style.backgroundColor = ''; // Reset previous background
+      feedbackDiv.style.animation = ''; // Reset previous animation
+      if (status === 'frustrated' || status === 'distracted') {
+        feedbackDiv.style.animation = 'pulse-red 1.5s infinite alternate';
+      } else if (status === 'engaged') {
+        feedbackDiv.style.animation = 'pulse-green 1.5s infinite alternate';
+      }
     }
   </script>
 </body>

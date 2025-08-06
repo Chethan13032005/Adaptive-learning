@@ -167,13 +167,12 @@
           output.innerHTML = `<iframe class="video-embed" src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(topic)} lesson" allowfullscreen></iframe>
           <div>${content}</div>`;
         } else if (mode === 'simulation') {
-          if (topic.toLowerCase().includes('fraction')) {
-            output.innerHTML = `<iframe class="video-embed" src="https://www.youtube.com/embed/6pRisk5U0GA" title="Fractions for Kids" allowfullscreen></iframe>
+          // Attempt to find a simulation for the specific topic
+          const simSearchLink = `https://phet.colorado.edu/en/simulations/search?q=${encodeURIComponent(topic)}`;
+          // Fallback or general link if no specific simulation found/handled
+          output.innerHTML = `<p>Searching for a simulation for "${topic}"...</p>
+          <a href="${simSearchLink}" target="_blank">🔗 Click here to search for "${topic}" simulations on PhET</a>
 <div>${content}</div>`;
-          } else {
-            output.innerHTML = `<a href="https://phet.colorado.edu/en/simulations/category/math" target="_blank">🔗 Try a math simulation on PhET</a><div>${content}</div>`;
-          }
-          } else {
         } else {
           output.innerHTML = `<b>Structured Lesson:</b><div class="structured">${content}</div>`;
         }
