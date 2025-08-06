@@ -41,6 +41,14 @@
   </nav>
   <div class="container">
     <h2>Our Impact</h2>
+    <ul style="margin:1.5rem 0 2rem 1.5rem; font-size:1.1em; color:#222; list-style:square;">
+      <li>Empowers neurodiverse learners with personalized, adaptive lessons.</li>
+      <li>Boosts student confidence and independence through agentic AI support.</li>
+      <li>Improves engagement and retention with multimodal, interactive content.</li>
+      <li>Facilitates inclusive education by supporting diverse learning needs.</li>
+      <li>Provides free access to quality tutoring for underserved communities.</li>
+      <li>Encourages peer collaboration and social-emotional growth.</li>
+    </ul>
     <div class="impact-section">
       <ul>
         <li><b>10,000+</b> students reached globally</li>
@@ -48,13 +56,16 @@
         <li><b>95%</b> of users report improved engagement</li>
         <li><b>100%</b> free for all neurodiverse learners</li>
       </ul>
-      <h3 style="margin-top:2rem;">Positive Reviews</h3>
-      <div class="review-list">
-        <div class="review">"This AI tutor understands my learning style. I love the visual lessons!" – Priya, 8th Grade</div>
-        <div class="review">"The buddy agent makes learning fun and less lonely." – Sam, 6th Grade</div>
- <div class="review">"As a student with dyslexia, I appreciate the flexibility in how lessons are presented. The audio option is a game-changer!" - Alex, 7th Grade</div>
- <div class="review">"The step-by-step help is fantastic for my ADHD. It keeps me focused and breaks down complex problems." - Jordan, 9th Grade</div>
-        <div class="review">"I can finally keep up in class. Thank you for making this free!" – Fatima, 10th Grade</div>
+      <div style="margin-top:2.5rem;">
+        <h3>Share Your Experience</h3>
+        <form id="reviewForm" onsubmit="submitReview(event)" style="max-width:420px;margin:auto;">
+          <textarea id="reviewInput" rows="3" maxlength="200" placeholder="Write your experience (max 200 chars)..." style="width:100%;border-radius:8px;padding:0.7em;font-size:1em;"></textarea>
+          <br>
+          <input type="text" id="reviewName" maxlength="30" placeholder="Your name (optional)" style="margin-top:0.5em;width:60%;border-radius:8px;padding:0.5em;">
+          <button type="submit" style="margin-top:0.5em;background:linear-gradient(90deg,#00c3ff,#00e6b8);color:#fff;border:none;border-radius:8px;padding:0.6em 1.5em;font-weight:bold;box-shadow:0 2px 8px #00c3ff22;transition:background 0.2s;">Submit</button>
+        </form>
+        <div id="reviewStatus" style="margin-top:1em;text-align:center;font-size:1.1em;color:#00c3ff;"></div>
+        <div class="review-list" id="reviewList"></div>
       </div>
     </div>
   </div>
@@ -63,5 +74,34 @@
   </footer>
   <script src="agentic-ai.js"></script>
   <script src="nav.js"></script>
+  <script>
+    function submitReview(e) {
+      e.preventDefault();
+      const review = document.getElementById('reviewInput').value.trim();
+      const name = document.getElementById('reviewName').value.trim();
+      if (!review) {
+        document.getElementById('reviewStatus').innerHTML = '<span style="color:red;">Please enter your review.</span>';
+        return;
+      }
+      document.getElementById('reviewStatus').innerHTML = '⏳ Submitting your review...';
+      document.getElementById('reviewForm').style.opacity = 0.6;
+      setTimeout(() => {
+        const reviewList = document.getElementById('reviewList');
+        const div = document.createElement('div');
+        div.className = 'review';
+        div.style.animationDelay = '0s';
+        div.innerHTML = `"${review}"${name ? ' – ' + name : ''}`;
+        reviewList.appendChild(div);
+        document.getElementById('reviewStatus').innerHTML = '<span style="color:green;">Thank you for your feedback!</span>';
+        document.getElementById('reviewForm').reset();
+        document.getElementById('reviewForm').style.opacity = 1;
+        div.style.opacity = 0;
+        div.style.transform = 'translateX(-30px)';
+        setTimeout(()=>{
+          div.style.animation = 'slideInFadeIn 0.8s ease-out forwards';
+        }, 100);
+      }, 1800); // Simulate processing delay
+    }
+  </script>
 </body>
 </html>

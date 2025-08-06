@@ -5,7 +5,14 @@
   <title>Core Learning Features - Adaptive AI Tutor</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .video-embed { margin: 1.5rem auto; display: block; max-width: 480px; width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);}
+    .video-embed { margin: 1.5rem auto; display: block; max-width: 480px; width: 100%; border-radius: 18px; box-shadow: 0 4px 24px #00c3ff33; transition: box-shadow 0.3s;}
+    .video-embed:hover { box-shadow: 0 8px 32px #00c3ff77; }
+    .lesson-card, .ai-chat, .teach-back-section, .hint-section { background: #f8fbff; border-radius: 18px; box-shadow: 0 2px 16px #00c3ff11; margin-bottom: 1.5rem; }
+    .container { background: linear-gradient(135deg, #e0f7fa 0%, #f8fbff 100%); border-radius: 24px; padding: 2rem 1rem; }
+    .controls, .ai-chat, .teach-back-section, .hint-section { padding: 1rem; }
+    .try-multimodal-btn, .hint-btn, .ai-chat button, .teach-back-section button { background: linear-gradient(90deg, #00c3ff, #00e6b8); color: #fff; border: none; border-radius: 12px; padding: 0.7rem 2rem; font-size: 1.1rem; font-weight: bold; box-shadow: 0 2px 8px #00c3ff22; cursor: pointer; transition: background 0.2s; }
+    .try-multimodal-btn:hover, .hint-btn:hover, .ai-chat button:hover, .teach-back-section button:hover { background: linear-gradient(90deg, #ff6a00, #ffb800); }
+    .agentic-suggestion { background: #e3ffe3; border-radius: 10px; padding: 1rem; color: #1a4d1a; font-weight: bold; margin-top: 1.5rem; box-shadow: 0 2px 8px #00c3ff22; }
     .hint-section { margin-top: 2rem; background: #f0f8ff; border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);}
     .hint-btn { background: #00c3ff; color: #fff; border: none; border-radius: 8px; padding: 0.5rem 1.2rem; font-size: 1rem; cursor: pointer; margin-bottom: 1rem;}
     .hint-btn:hover { background: #ff6a00;}
@@ -14,6 +21,30 @@
     .ai-chat button { background: #00c3ff; color: #fff; border: none;}
     .ai-chat button:hover { background: #ff6a00;}
     .ai-chat-history { margin-top: 1rem; max-height: 180px; overflow-y: auto;}
+    .ai-typing {
+      display: inline-block;
+      margin: 0.5em 0 0.5em 0.5em;
+      font-size: 1.1em;
+      color: #00c3ff;
+      letter-spacing: 2px;
+      vertical-align: middle;
+    }
+    .ai-typing span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 2px;
+      background: #00c3ff;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: typingBlink 1.2s infinite both;
+    }
+    .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBlink {
+      0%, 80%, 100% { opacity: 0.5; }
+      40% { opacity: 1; }
+    }
     .ai-msg { margin-bottom: 0.7rem; }
     .ai-msg.user { color: #00c3ff; }
     .ai-msg.ai { color: #222; }
@@ -93,6 +124,13 @@
   <script src="agentic-ai.js"></script>
   <script src="nav.js"></script>
   <script>
+    // --- AI API Keys (for best ChatGPT-like answers) ---
+    // HuggingFace: Get a free key at https://huggingface.co/settings/tokens and paste below:
+    const HF_API_KEY = '';
+    // OpenAI: Get a key at https://platform.openai.com/api-keys and paste below (optional, for GPT-3.5/4):
+    const OPENAI_API_KEY = '';
+    // --- YouTube API Key (add your key below for best results) ---
+    const YOUTUBE_API_KEY = '';
     // --- Agentic AI State ---
     let currentUtter = null;
     let userProfile = JSON.parse(localStorage.getItem('neuroProfile') || '{"mode":"visual"}');
@@ -164,17 +202,62 @@
           synth.speak(utter);
           document.getElementById('pauseBtn').style.display = 'inline-block';
         } else if (mode === 'video') {
-          output.innerHTML = `<iframe class="video-embed" src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(topic)} lesson" allowfullscreen></iframe>
-          <div>${content}</div>`;
+          output.innerHTML = '🔎 Finding the best video...';
+          let videoId = '';
+          let found = false;
+          // Try first public proxy
+          try {
+            const ytRes = await fetch(`https://yt.lemnoslife.com/noKey/search?part=snippet&q=${encodeURIComponent(topic)}&type=video&maxResults=1`);
+            if (ytRes.ok) {
+              const ytData = await ytRes.json();
+              if (ytData.items && ytData.items.length > 0) {
+                videoId = ytData.items[0].id.videoId;
+                found = true;
+              }
+            }
+          } catch {}
+          // Try second proxy if first fails
+          if (!found) {
+            try {
+              const ytRes2 = await fetch(`https://yt-api.p.rapidapi.com/search?query=${encodeURIComponent(topic)}&type=video&limit=1`, {
+                headers: { 'X-RapidAPI-Host': 'yt-api.p.rapidapi.com' }
+              });
+              if (ytRes2.ok) {
+                const ytData2 = await ytRes2.json();
+                if (ytData2 && ytData2.videos && ytData2.videos.length > 0) {
+                  videoId = ytData2.videos[0].videoId;
+                  found = true;
+                }
+              }
+            } catch {}
+          }
+          if (found && videoId) {
+            output.innerHTML = `<iframe class="video-embed" src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&controls=1" allow="autoplay; encrypted-media" allowfullscreen></iframe><div>${content}</div>`;
+          } else {
+            output.innerHTML = `<div style="color:#c00;font-weight:bold;margin:1.5rem 0;">No video found for this topic. Try a broader topic or <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(topic)}" target="_blank" style="color:#0077cc;text-decoration:underline;">search on YouTube</a>.</div>`;
+          }
         } else if (mode === 'simulation') {
-          // Attempt to find a simulation for the specific topic
-          const simSearchLink = `https://phet.colorado.edu/en/simulations/search?q=${encodeURIComponent(topic)}`;
-          // Fallback or general link if no specific simulation found/handled
-          output.innerHTML = `<p>Searching for a simulation for "${topic}"...</p>
-          <a href="${simSearchLink}" target="_blank">🔗 Click here to search for "${topic}" simulations on PhET</a>
-<div>${content}</div>`;
+          // Always try to embed a PhET simulation for known topics, else show search link
+          const phetSims = {
+            'fractions': 'https://phet.colorado.edu/sims/html/fractions-equality/latest/fractions-equality_en.html',
+            'gravity': 'https://phet.colorado.edu/sims/html/gravity-force-lab/latest/gravity-force-lab_en.html',
+            'photosynthesis': 'https://phet.colorado.edu/sims/html/energy-forms-and-changes/latest/energy-forms-and-changes_en.html',
+            'electricity': 'https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_en.html',
+            'solar system': 'https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html'
+          };
+          let simKey = Object.keys(phetSims).find(k => topic.toLowerCase().includes(k));
+          if (simKey) {
+            output.innerHTML = `<iframe class="video-embed" src="${phetSims[simKey]}" style="height:480px;min-height:320px;" allow="autoplay; fullscreen" allowfullscreen></iframe><div>${content}</div>`;
+          } else {
+            const simSearchLink = `https://phet.colorado.edu/en/simulations/search?q=${encodeURIComponent(topic)}`;
+            output.innerHTML = `<div style="color:#c00;font-weight:bold;margin:1.5rem 0;">No direct simulation found for this topic. <a href="${simSearchLink}" target="_blank">🔗 Search for "${topic}" simulations on PhET</a></div><div>${content}</div>`;
+          }
+        } else if (mode === 'structured') {
+          // Format as point-wise data
+          const points = content.split(/\. |\n|\r/).filter(s => s.trim().length > 0);
+          output.innerHTML = `<b>Structured Lesson:</b><ul class="structured">${points.map(p => `<li>${p.trim().replace(/^\d+\.\s*/, '')}</li>`).join('')}</ul>`;
         } else {
-          output.innerHTML = `<b>Structured Lesson:</b><div class="structured">${content}</div>`;
+          output.innerHTML = `<div>${content}</div>`;
         }
         showBuddyMessage(topic);
 
@@ -198,39 +281,157 @@
       if (!userMsg) return;
       history.innerHTML += `<div class="ai-msg user">🧑: ${userMsg}</div>`;
       input.value = '';
-      let aiResponse = '';
-      let lower = userMsg.toLowerCase();
-
-      // Agentic adaptation
-      if (/reteach/.test(lower)) {
-        reteachCount++;
-        if (reteachCount > 2) {
-          aiResponse = "I notice you asked for reteaching several times. Would you like to try a different mode or get a step-by-step breakdown?";
-          showAgenticSuggestion("🤖 Suggestion: Try 'Step-by-Step' or switch lesson mode for a new approach!");
-        } else if (/fraction/.test(lower)) {
-          aiResponse = "Sure! Fractions represent parts of a whole. For example, 1/2 means one out of two equal parts.";
-        } else {
-          aiResponse = "Of course! Let me reteach that for you. What part is most confusing?";
-        }
-      } else if (/hint/.test(lower)) {
-        hintCount++;
-        if (hintCount > 2) {
-          aiResponse = "You've asked for several hints. Would you like to see the full solution step-by-step?";
-          showAgenticSuggestion("🤖 Suggestion: Click 'Step-by-Step' for a detailed breakdown!");
-        } else {
-          aiResponse = "Try breaking the problem into smaller steps. What do you know already?";
-        }
-      } else if (/explain/.test(lower)) {
-        aiResponse = "I'd be happy to explain! Please tell me what you find confusing.";
-      } else if (/mode|audio|visual|video|structured|simulation/.test(lower)) {
-        aiResponse = "You can switch lesson modes using the dropdown above for a different learning experience!";
-      } else {
-        aiResponse = "I'm here to help! Ask me to explain, reteach, or give a hint on any topic.";
+      // Add typing animation
+      const typingId = 'aiTyping' + Date.now();
+      history.innerHTML += `<div class="ai-msg ai" id="${typingId}"><span class="ai-typing"><span></span><span></span><span></span> Thinking...</span></div>`;
+      history.scrollTop = history.scrollHeight;
+      // 1. Use OpenAI GPT-3.5/4 if API key is present
+      if (OPENAI_API_KEY) {
+        fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + OPENAI_API_KEY
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [
+              { role: 'system', content: 'You are a helpful, expert AI tutor. Answer as clearly and conversationally as possible.' },
+              { role: 'user', content: userMsg }
+            ]
+          })
+        })
+        .then(r => r.json())
+        .then(data => {
+          let aiResponse = (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) ? data.choices[0].message.content : null;
+          document.getElementById(typingId)?.remove();
+          if (aiResponse) {
+            history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${aiResponse}</div>`;
+          } else {
+            let canned = getCannedAnswer(userMsg);
+            history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${canned}</div>`;
+          }
+          history.scrollTop = history.scrollHeight;
+        })
+        .catch(() => {
+          document.getElementById(typingId)?.remove();
+          let canned = getCannedAnswer(userMsg);
+          history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${canned}</div>`;
+          history.scrollTop = history.scrollHeight;
+        });
+        return;
       }
-      setTimeout(() => {
-        history.innerHTML += `<div class="ai-msg ai">🤖: ${aiResponse}</div>`;
-        history.scrollTop = history.scrollHeight;
-      }, 600);
+      // 2. Use HuggingFace Mistral-7B if API key is present
+      const hfHeaders = { 'Content-Type': 'application/json' };
+      if (HF_API_KEY) hfHeaders['Authorization'] = 'Bearer ' + HF_API_KEY;
+      fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2', {
+        method: 'POST',
+        headers: hfHeaders,
+        body: JSON.stringify({ inputs: `You are an expert AI tutor. Answer as helpfully and clearly as possible. Question: ${userMsg}` })
+      })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById(typingId)?.remove();
+        let aiResponse = (data && data.generated_text) ? data.generated_text : null;
+        if (aiResponse) {
+          history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${aiResponse}</div>`;
+          history.scrollTop = history.scrollHeight;
+        } else {
+          // Fallback: Flan-T5-Large
+          fetch('https://api-inference.huggingface.co/models/google/flan-t5-large', {
+            method: 'POST',
+            headers: hfHeaders,
+            body: JSON.stringify({ inputs: `You are an expert AI tutor. Answer as helpfully and clearly as possible. Question: ${userMsg}` })
+          })
+          .then(r2 => r2.json())
+          .then(data2 => {
+            document.getElementById(typingId)?.remove();
+            let fallbackResp = (data2 && data2.generated_text) ? data2.generated_text : null;
+            if (fallbackResp) {
+              history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${fallbackResp}</div>`;
+            } else {
+              let canned = getCannedAnswer(userMsg);
+              history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${canned}</div>`;
+            }
+            history.scrollTop = history.scrollHeight;
+          })
+          .catch(() => {
+            document.getElementById(typingId)?.remove();
+            let canned = getCannedAnswer(userMsg);
+            history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${canned}</div>`;
+            history.scrollTop = history.scrollHeight;
+          });
+        }
+      })
+      .catch(() => {
+        // Fallback: Flan-T5-Large
+        fetch('https://api-inference.huggingface.co/models/google/flan-t5-large', {
+          method: 'POST',
+          headers: hfHeaders,
+          body: JSON.stringify({ inputs: `You are an expert AI tutor. Answer as helpfully and clearly as possible. Question: ${userMsg}` })
+        })
+        .then(r2 => r2.json())
+        .then(data2 => {
+          document.getElementById(typingId)?.remove();
+          let fallbackResp = (data2 && data2.generated_text) ? data2.generated_text : null;
+          if (fallbackResp) {
+            history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${fallbackResp}</div>`;
+          } else {
+            let canned = getCannedAnswer(userMsg);
+            history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${canned}</div>`;
+          }
+          history.scrollTop = history.scrollHeight;
+        })
+        .catch(() => {
+          document.getElementById(typingId)?.remove();
+          let canned = getCannedAnswer(userMsg);
+          history.innerHTML += `<div class=\"ai-msg ai\">🤖: ${canned}</div>`;
+          history.scrollTop = history.scrollHeight;
+        });
+      });
+
+    // Local fallback: smart canned answers for demo
+    function getCannedAnswer(q) {
+      q = q.toLowerCase();
+      // Fact database for common questions
+      const facts = [
+        { keywords: ['apple', 'fruit', 'vegetable'], answer: 'Apple is a fruit.' },
+        { keywords: ['banana', 'fruit', 'vegetable'], answer: 'Banana is a fruit.' },
+        { keywords: ['carrot', 'fruit', 'vegetable'], answer: 'Carrot is a vegetable.' },
+        { keywords: ['potato', 'fruit', 'vegetable'], answer: 'Potato is a vegetable.' },
+        { keywords: ['tomato', 'fruit', 'vegetable'], answer: 'Tomato is botanically a fruit, but often used as a vegetable in cooking.' },
+        { keywords: ['photosynthesis'], answer: 'Photosynthesis is the process by which green plants use sunlight to make food from carbon dioxide and water.' },
+        { keywords: ['fraction'], answer: 'A fraction represents a part of a whole. For example, 1/2 means one out of two equal parts.' },
+        { keywords: ['gravity'], answer: 'Gravity is the force that attracts two bodies toward each other, like the Earth and the Moon.' },
+        { keywords: ['electricity'], answer: 'Electricity is the flow of electric charge, used to power devices and lights.' },
+        { keywords: ['world war ii'], answer: 'World War II was a global conflict from 1939 to 1945 involving most of the world’s nations.' },
+        { keywords: ['math'], answer: 'Mathematics is the study of numbers, shapes, and patterns. Do you have a specific math question?' },
+        { keywords: ['hello', 'hi'], answer: 'Hello! How can I help you learn today?' }
+      ];
+      for (const fact of facts) {
+        if (fact.keywords.every(k => q.includes(k))) return fact.answer;
+        // For questions like "Is apple a fruit or vegetable?"
+        if (fact.keywords.length > 1 && fact.keywords.some(k => q.includes(k))) {
+          // If question contains at least two of the keywords, return answer
+          let matchCount = fact.keywords.filter(k => q.includes(k)).length;
+          if (matchCount >= 2) return fact.answer;
+        }
+      }
+      // Simple Q&A for "is X a fruit or vegetable" pattern
+      const fruitVegMatch = q.match(/is (an? )?(\w+) (a |an )?(fruit|vegetable)[?]?/);
+      if (fruitVegMatch) {
+        const item = fruitVegMatch[2];
+        const fruitList = ['apple','banana','orange','mango','grape','pear','peach','plum','cherry','watermelon','pineapple','strawberry','blueberry','kiwi','papaya','pomegranate','apricot','avocado','coconut','fig','guava','lemon','lime','lychee','melon','nectarine','passionfruit','persimmon','quince','raspberry','tangerine'];
+        const vegList = ['carrot','potato','tomato','onion','lettuce','cabbage','spinach','broccoli','cauliflower','cucumber','eggplant','garlic','ginger','leek','okra','pea','pepper','pumpkin','radish','turnip','zucchini','beet','celery','corn','mushroom','sweet potato','yam'];
+        if (fruitList.includes(item)) return `${item.charAt(0).toUpperCase()+item.slice(1)} is a fruit.`;
+        if (vegList.includes(item)) {
+          if (item === 'tomato') return 'Tomato is botanically a fruit, but often used as a vegetable in cooking.';
+          return `${item.charAt(0).toUpperCase()+item.slice(1)} is a vegetable.`;
+        }
+      }
+      // If nothing matches, fallback
+      return 'Sorry, I do not have a direct answer for that, but I can help you learn about it! Try rephrasing or ask about another topic.';
+    }
     }
 
     // --- Gamified Peer AI Buddy (Agentic) ---
@@ -239,17 +440,24 @@
       const feedback = document.getElementById('teachBackFeedback');
       const answer = input.value.trim().toLowerCase();
       if (!answer) return;
-      if (answer.includes('part') && answer.includes('whole')) {
-        teachBackSuccess++;
-        feedback.innerHTML = "🎉 Buddy: That's a great explanation! You really understand fractions!";
+      // Use HuggingFace Inference API for peer review (OpenAssistant)
+      feedback.innerHTML = 'Reviewing your answer...';
+      fetch('https://api-inference.huggingface.co/models/OpenAssistant/oasst-sft-1-pythia-12b', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ inputs: `Review this student answer and give friendly, constructive feedback: ${answer}` })
+      })
+      .then(r => r.json())
+      .then(data => {
+        let aiFeedback = (data && data.generated_text) ? data.generated_text : 'Sorry, I could not review your answer right now.';
+        feedback.innerHTML = `🤖 Buddy: ${aiFeedback}`;
         if (teachBackSuccess > 1) {
           showAgenticSuggestion("🤖 Awesome! Want to try teaching me a new topic?");
         }
-      } else if (answer.length > 20) {
-        feedback.innerHTML = "👍 Buddy: Good effort! Try to mention 'parts' and 'whole' in your explanation.";
-      } else {
-        feedback.innerHTML = "🤔 Buddy: Can you try explaining it in a bit more detail?";
-      }
+      })
+      .catch(() => {
+        feedback.innerHTML = '🤖 Buddy: Sorry, I could not review your answer right now.';
+      });
       input.value = '';
     }
 

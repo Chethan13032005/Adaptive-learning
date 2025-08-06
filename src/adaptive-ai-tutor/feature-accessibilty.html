@@ -18,18 +18,36 @@
     <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
   </nav>
   <div class="container">
-    <h2>Accessibility Demo</h2>
+    <h2>Accessibility Demo <span style="font-size:0.7em; background:#00c3ff22; border-radius:8px; padding:0.2em 0.7em;">Agentic AI Active</span></h2>
     <p>
-      Try changing font size and color contrast for better accessibility.
+      Try changing font size and color contrast for better accessibility. <span style="color:#00c3ff; font-weight:bold;">(Agentic accessibility tips enabled)</span>
     </p>
     <div class="lesson-card" style="margin-top:1.5rem;">
       <label for="fontSizeRange"><b>Font Size:</b></label>
       <input type="range" id="fontSizeRange" min="14" max="28" value="16" oninput="changeFontSize(this.value)">
       <span id="fontSizeValue">16</span>px
       <br><br>
+      <label for="fontFamilySelect"><b>Font Family:</b></label>
+      <select id="fontFamilySelect" onchange="changeFontFamily(this.value)">
+        <option value="Arial">Arial</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Comic Sans MS">Comic Sans</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+      <br><br>
+      <label for="themeSelect"><b>Theme:</b></label>
+      <select id="themeSelect" onchange="changeTheme(this.value)">
+        <option value="default">Default</option>
+        <option value="dark">Dark</option>
+        <option value="high-contrast">High Contrast</option>
+      </select>
+      <br><br>
       <button onclick="toggleContrast()">Toggle High Contrast</button>
-      <div id="accessText" style="margin-top:1.5rem;">
-        <p>This text will change size and contrast based on your settings.</p>
+      <button onclick="toggleAnimation()">Toggle Animation</button>
+      <div id="accessText" style="margin-top:1.5rem; animation: fadeIn 1s;">
+        <p>This text will change size, font, theme, and contrast based on your settings.</p>
+        <div id="agenticAccessTip" style="margin-top:0.7rem; color:#00c3ff; font-size:1.1em;"></div>
       </div>
     </div>
   </div>
@@ -41,19 +59,49 @@
   <script>
     function changeFontSize(val) {
       const accessText = document.getElementById('accessText');
-      accessText.style.transition = 'font-size 0.3s ease-in-out'; // Add transition
- accessText.style.fontSize = val + 'px';
+      accessText.style.transition = 'font-size 0.3s ease-in-out';
+      accessText.style.fontSize = val + 'px';
       document.getElementById('fontSizeValue').textContent = val;
-      // Remove transition after animation completes to avoid interference
       setTimeout(() => { accessText.style.transition = ''; }, 300);
+      showAgenticAccessTip('font');
+    }
+
+    function changeFontFamily(val) {
+      document.getElementById('accessText').style.fontFamily = val;
+      showAgenticAccessTip('font');
+    }
+
+    function changeTheme(val) {
+      const el = document.getElementById('accessText');
+      if (val === 'dark') {
+        el.style.backgroundColor = '#222';
+        el.style.color = '#fff';
+      } else if (val === 'high-contrast') {
+        el.style.backgroundColor = '#000';
+        el.style.color = '#ff0';
+      } else {
+        el.style.backgroundColor = '';
+        el.style.color = '';
+      }
+      showAgenticAccessTip('theme');
+    }
+
+    let animOn = false;
+    function toggleAnimation() {
+      const el = document.getElementById('accessText');
+      animOn = !animOn;
+      if (animOn) {
+        el.style.animation = 'pulse 1s infinite';
+      } else {
+        el.style.animation = '';
+      }
+      showAgenticAccessTip('animation');
     }
 
     function toggleContrast() {
       const el = document.getElementById('accessText');
-      // Add fade-out effect
       el.style.transition = 'opacity 0.3s ease-in-out';
       el.style.opacity = 0;
-
       if (el.style.backgroundColor === 'black') {
         el.style.backgroundColor = '';
         el.style.color = '';
@@ -61,11 +109,24 @@
         el.style.backgroundColor = 'black';
         el.style.color = 'yellow';
       }
-
-      // Add fade-in effect after a short delay
       setTimeout(() => {
         el.style.opacity = 1;
-      }, 50); // Small delay for the transition to be visible
+      }, 50);
+      showAgenticAccessTip('contrast');
+    }
+
+    // Agentic accessibility tips
+    function showAgenticAccessTip(type) {
+      if (typeof agenticFeedbackThanks === 'function') {
+        let msg = '';
+        switch(type) {
+          case 'font': msg = '📝 Agentic Tip: Adjusting font size and family can help with readability!'; break;
+          case 'theme': msg = '🎨 Agentic Tip: Try different themes for your comfort.'; break;
+          case 'animation': msg = '✨ Agentic Tip: Animations can make learning more engaging!'; break;
+          case 'contrast': msg = '🌈 Agentic Tip: High contrast improves visibility for many users.'; break;
+        }
+        document.getElementById('agenticAccessTip').innerHTML = msg + '<br>' + agenticFeedbackThanks();
+      }
     }
   </script>
 </body>

@@ -34,9 +34,9 @@
     .topic-item { animation: slideUpFadeIn 0.5s ease-out; }
   </style>
   <div class="container">
-    <h2>Progress Dashboard Demo</h2>
+    <h2>Progress Dashboard Demo <span style="font-size:0.7em; background:#00c3ff22; border-radius:8px; padding:0.2em 0.7em;">Agentic AI Active</span></h2>
     <p>
-      Track your learning journey and celebrate achievements!
+      Track your learning journey and celebrate achievements! <span style="color:#00c3ff; font-weight:bold;">(Agentic suggestions enabled)</span>
     </p>
     <div class="lesson-card" style="margin-top:1.5rem;">
       <div style="margin-bottom:1rem;">
@@ -48,15 +48,21 @@
         </ul>
       </div>
       <div>
+        <b>Points:</b> <span id="pointsValue">0</span> <span style="color:gold;">★</span>
+        <button onclick="addPoints(10)" style="margin-left:1rem;">Earn 10 Points</button>
+      </div>
+      <div style="margin-top:1rem;">
+        <b>Badges:</b>
+        <span id="badgesList"></span>
+      </div>
+      <div style="margin-top:1rem;">
         <b>Achievements:</b>
-        <ul>
+        <ul id="achievementsList">
           <li class="achievement-icon">🏅 First Lesson Completed</li>
           <li class="achievement-icon">🎯 7-Day Learning Streak</li>
           <li class="achievement-icon">🌟 Helped Your Buddy</li>
         </ul>
-      <!-- ...existing HTML code... -->
       </div>
-      <!-- Add this after the Achievements section, inside .lesson-card -->
       <div id="agentMessage" class="buddy-message" style="margin-top:1.5rem;"></div>
       <button onclick="addTopic()">Add Random Topic</button>
     </div>
@@ -71,6 +77,9 @@
 <script src="nav.js"></script>
 <script src="agentic-ai.js"></script>
 <script>
+  let points = 0;
+  let badges = [];
+
   function addTopic() {
     const topics = ["Decimals", "Gravity", "The Solar System", "Photosynthesis", "Fractions", "Electricity"];
     const topic = topics[Math.floor(Math.random() * topics.length)];
@@ -79,7 +88,24 @@
     li.textContent = topic;
     li.classList.add('topic-item'); // Add class for animation
     ul.appendChild(li);
+    addPoints(5); // Earn points for adding a topic
     agenticSuggestion();
+    checkBadges();
+  }
+
+  function addPoints(val) {
+    points += val;
+    document.getElementById('pointsValue').textContent = points;
+    checkBadges();
+  }
+
+  function checkBadges() {
+    let newBadges = [];
+    if (points >= 10 && !badges.includes('🎓')) newBadges.push('🎓');
+    if (points >= 50 && !badges.includes('🏆')) newBadges.push('🏆');
+    if (points >= 100 && !badges.includes('👑')) newBadges.push('👑');
+    badges = [...badges, ...newBadges];
+    document.getElementById('badgesList').innerHTML = badges.map(b=>`<span style='font-size:1.5em;margin-right:0.5em;'>${b}</span>`).join('');
   }
 
   function agenticSuggestion() {
@@ -87,7 +113,7 @@
     const count = ul.getElementsByTagName('li').length;
     document.getElementById('agentMessage').innerHTML = agenticProgressSuggestion(count);
   }
-  
+
   function animateAchievements() {
     const achievementIcons = document.querySelectorAll('.achievement-icon');
     achievementIcons.forEach(icon => icon.style.animation = 'pulse 1.5s infinite ease-in-out');
@@ -97,6 +123,8 @@
     if (typeof setActiveNav === "function") setActiveNav();
     agenticSuggestion();
     animateAchievements(); // Animate achievements on load
+    document.getElementById('pointsValue').textContent = points;
+    checkBadges();
   };
 </script>
 </body>

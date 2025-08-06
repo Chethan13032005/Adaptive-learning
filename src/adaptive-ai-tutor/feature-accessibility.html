@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessibility - Adaptive AI Tutor</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .access-container { background: linear-gradient(135deg, #e0f7fa 0%, #f8fbff 100%); border-radius: 24px; padding: 2rem 1rem; margin-top:2rem; }
+    .access-card { background: #f8fbff; border-radius: 18px; box-shadow: 0 2px 16px #00c3ff11; margin-bottom: 1.5rem; padding:1.5rem; }
+    .access-label { font-weight: bold; margin-right: 0.7em; }
+    .access-btn, .access-select, .access-range, .access-toggle {
+      background: #111; color: #fff; border: none; border-radius: 12px; padding: 0.5rem 1.2rem; font-size: 1.1rem; font-weight: bold; box-shadow: 0 2px 8px #00c3ff22; cursor: pointer; transition: background 0.2s, color 0.2s; margin-right:0.7em; }
+    .access-btn:hover, .access-toggle:hover, .access-select:focus, .access-range:focus {
+      background: #222; color: #ffb800;
+    }
+    .access-range { width: 120px; }
+    .access-preview { margin-top:2rem; padding:1.5rem; border-radius:16px; background:#fff; box-shadow:0 2px 8px #00c3ff22; font-size:1.2em; transition: all 0.3s; }
+    .theme-dark { background: #222 !important; color: #fff !important; }
+    .theme-high-contrast { background: #000 !important; color: #ff0 !important; }
+    .theme-dyslexia { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
+    .theme-large-cursor * { cursor: url('https://cdn.jsdelivr.net/npm/@iconify/icons-mdi/cursor-default-outline.svg'), auto !important; }
+    .theme-underline-links a { text-decoration: underline !important; }
+    .theme-bold-text { font-weight: bold !important; }
+    .theme-line-spacing { line-height: 2 !important; }
+    .theme-letter-spacing { letter-spacing: 0.1em !important; }
+    .theme-no-animations * { transition: none !important; animation: none !important; }
+    .theme-invert { filter: invert(1) hue-rotate(180deg) !important; }
+    .theme-monospace { font-family: 'Courier New', Courier, monospace !important; }
+    .theme-serif { font-family: 'Times New Roman', Times, serif !important; }
+    .theme-sans-serif { font-family: Arial, Helvetica, sans-serif !important; }
+    .theme-shadow-text { text-shadow: 2px 2px 6px #00c3ff33 !important; }
+    .theme-outline-text { -webkit-text-stroke: 1px #00c3ff; }
+    .theme-focus-outline *:focus { outline: 3px solid #ffb800 !important; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="logo.png" alt="AI Tutor Logo" title="Adaptive AI Tutor Logo">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="impact.html">Impact</a>
+    <a href="about.html">About Us</a>
+    <a href="feedback.html">Feedback</a>
+    <button class="mode-switch" id="modeSwitchBtn" onclick="toggleMode()">🌙 Dark Mode</button>
+  </nav>
+  <div class="access-container">
+    <h2>Designed for all neurodiverse needs: color, font, and interaction options</h2>
+    <div class="access-card">
+      <span class="access-label">Font Size:</span>
+      <input type="range" min="14" max="36" value="18" class="access-range" id="fontSizeRange" oninput="updateFontSize(this.value)" aria-label="Font Size">
+      <span id="fontSizeValue">18</span>px
+    </div>
+    <div class="access-card">
+      <span class="access-label">Font Family:</span>
+      <select class="access-select" id="fontFamilySelect" onchange="updateFontFamily(this.value)" aria-label="Font Family">
+        <option value="sans-serif">Sans-serif</option>
+        <option value="serif">Serif</option>
+        <option value="monospace">Monospace</option>
+        <option value="dyslexia">OpenDyslexic</option>
+      </select>
+    </div>
+    <div class="access-card">
+      <span class="access-label">Theme:</span>
+      <select class="access-select" id="themeSelect" onchange="updateTheme(this.value)" aria-label="Theme">
+        <option value="default">Default</option>
+        <option value="dark">Dark</option>
+        <option value="high-contrast">High Contrast</option>
+        <option value="invert">Invert Colors</option>
+      </select>
+    </div>
+    <div class="access-card">
+      <span class="access-label">Line Spacing:</span>
+      <button class="access-btn" onclick="toggleClass('theme-line-spacing')" aria-pressed="false" aria-label="Toggle Line Spacing">Toggle</button>
+      <span class="access-label">Letter Spacing:</span>
+      <button class="access-btn" onclick="toggleClass('theme-letter-spacing')" aria-pressed="false" aria-label="Toggle Letter Spacing">Toggle</button>
+    </div>
+    <div class="access-card">
+      <span class="access-label">Bold Text:</span>
+      <button class="access-btn" onclick="toggleClass('theme-bold-text')" aria-pressed="false" aria-label="Toggle Bold Text">Toggle</button>
+      <span class="access-label">Shadow Text:</span>
+      <button class="access-btn" onclick="toggleClass('theme-shadow-text')" aria-pressed="false" aria-label="Toggle Shadow Text">Toggle</button>
+      <span class="access-label">Outline Text:</span>
+      <button class="access-btn" onclick="toggleClass('theme-outline-text')" aria-pressed="false" aria-label="Toggle Outline Text">Toggle</button>
+    </div>
+    <div class="access-card">
+      <span class="access-label">Underline Links:</span>
+      <button class="access-btn" onclick="toggleClass('theme-underline-links')" aria-pressed="false" aria-label="Toggle Underline Links">Toggle</button>
+      <span class="access-label">Large Cursor:</span>
+      <button class="access-btn" onclick="toggleClass('theme-large-cursor')" aria-pressed="false" aria-label="Toggle Large Cursor">Toggle</button>
+      <span class="access-label">Focus Outline:</span>
+      <button class="access-btn" onclick="toggleClass('theme-focus-outline')" aria-pressed="false" aria-label="Toggle Focus Outline">Toggle</button>
+    </div>
+    <div class="access-card">
+      <span class="access-label">No Animations:</span>
+      <button class="access-btn" onclick="toggleClass('theme-no-animations')" aria-pressed="false" aria-label="Toggle No Animations">Toggle</button>
+    </div>
+    <div class="access-preview" id="accessPreview">
+      <p>This is a live preview. Adjust the settings above to see accessibility features in action! <a href="#">Try a link</a></p>
+      <p>"Learning is for everyone. Make it your own!"</p>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Adaptive AI Tutor. All rights reserved. | Made with ❤️ for neurodiverse learners.
+  </footer>
+  <script src="nav.js"></script>
+  <script>
+    // Apply accessibility settings to the whole website
+    const root = document.body;
+    const htmlRoot = document.documentElement;
+    function updateFontSize(val) {
+      root.style.fontSize = val + 'px';
+      document.getElementById('fontSizeValue').textContent = val;
+      localStorage.setItem('access_fontSize', val);
+    }
+    function updateFontFamily(val) {
+      root.classList.remove('theme-serif','theme-monospace','theme-dyslexia','theme-sans-serif');
+      if (val === 'serif') root.classList.add('theme-serif');
+      else if (val === 'monospace') root.classList.add('theme-monospace');
+      else if (val === 'dyslexia') root.classList.add('theme-dyslexia');
+      else root.classList.add('theme-sans-serif');
+      localStorage.setItem('access_fontFamily', val);
+    }
+    function updateTheme(val) {
+      root.classList.remove('theme-dark','theme-high-contrast','theme-invert');
+      if (val === 'dark') root.classList.add('theme-dark');
+      else if (val === 'high-contrast') root.classList.add('theme-high-contrast');
+      else if (val === 'invert') root.classList.add('theme-invert');
+      localStorage.setItem('access_theme', val);
+    }
+    function toggleClass(cls) {
+      root.classList.toggle(cls);
+      // Save toggled classes in localStorage
+      let toggled = JSON.parse(localStorage.getItem('access_toggles') || '[]');
+      if (root.classList.contains(cls)) {
+        if (!toggled.includes(cls)) toggled.push(cls);
+      } else {
+        toggled = toggled.filter(c => c !== cls);
+      }
+      localStorage.setItem('access_toggles', JSON.stringify(toggled));
+    }
+    // Keyboard accessibility: allow Enter/Space to toggle buttons
+    document.querySelectorAll('.access-btn').forEach(btn => {
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    // On load, restore settings from localStorage
+    window.addEventListener('DOMContentLoaded', () => {
+      // Font size
+      const fs = localStorage.getItem('access_fontSize');
+      if (fs) {
+        document.getElementById('fontSizeRange').value = fs;
+        updateFontSize(fs);
+      }
+      // Font family
+      const ff = localStorage.getItem('access_fontFamily');
+      if (ff) {
+        document.getElementById('fontFamilySelect').value = ff;
+        updateFontFamily(ff);
+      }
+      // Theme
+      const th = localStorage.getItem('access_theme');
+      if (th) {
+        document.getElementById('themeSelect').value = th;
+        updateTheme(th);
+      }
+      // Toggles
+      const toggles = JSON.parse(localStorage.getItem('access_toggles') || '[]');
+      toggles.forEach(cls => root.classList.add(cls));
+    });
+  </script>
+</body>
+</html>
