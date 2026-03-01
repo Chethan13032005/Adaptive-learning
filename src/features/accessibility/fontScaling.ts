@@ -30,3 +30,8 @@ export function clampScale(scale: number, config: FontScaleConfig = DEFAULT_FONT
 export function resetFontScale(): void {
   currentScale = DEFAULT_FONT_SCALE_CONFIG.defaultScale;
 }
+
+export function calculateDynamicRem(basePx: number, scaleFactor: number): string {
+  const scaledPx = basePx * scaleFactor;
+  return (scaledPx / 16).toFixed(3) + 'rem';
+}
