@@ -22,3 +22,11 @@ export function getFontScale(): number {
 export function setFontScale(newScale: number): void {
   currentScale = Math.max(DEFAULT_FONT_SCALE_CONFIG.minScale, Math.min(DEFAULT_FONT_SCALE_CONFIG.maxScale, newScale));
 }
+
+export function clampScale(scale: number, config: FontScaleConfig = DEFAULT_FONT_SCALE_CONFIG): number {
+  return Math.min(Math.max(scale, config.minScale), config.maxScale);
+}
+
+export function resetFontScale(): void {
+  currentScale = DEFAULT_FONT_SCALE_CONFIG.defaultScale;
+}
