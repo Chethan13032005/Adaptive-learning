@@ -12,3 +12,13 @@ export const DEFAULT_FONT_SCALE_CONFIG: FontScaleConfig = {
   defaultScale: 1.0,
   step: 0.1
 };
+
+let currentScale: number = DEFAULT_FONT_SCALE_CONFIG.defaultScale;
+
+export function getFontScale(): number {
+  return currentScale;
+}
+
+export function setFontScale(newScale: number): void {
+  currentScale = Math.max(DEFAULT_FONT_SCALE_CONFIG.minScale, Math.min(DEFAULT_FONT_SCALE_CONFIG.maxScale, newScale));
+}
