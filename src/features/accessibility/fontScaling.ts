@@ -35,3 +35,8 @@ export function calculateDynamicRem(basePx: number, scaleFactor: number): string
   const scaledPx = basePx * scaleFactor;
   return (scaledPx / 16).toFixed(3) + 'rem';
 }
+
+export function scaleElementTree(root: HTMLElement, scale: number): void {
+  root.style.fontSize = (scale * 100).toFixed(0) + '%';
+  root.setAttribute('data-font-scale', scale.toString());
+}
