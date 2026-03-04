@@ -40,3 +40,13 @@ export function scaleElementTree(root: HTMLElement, scale: number): void {
   root.style.fontSize = (scale * 100).toFixed(0) + '%';
   root.setAttribute('data-font-scale', scale.toString());
 }
+
+export function saveFontPreference(scale: number): void {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('user_font_scale', scale.toString());
+    }
+  } catch (err) {
+    console.warn('Failed to save font scale preference to localStorage', err);
+  }
+}
