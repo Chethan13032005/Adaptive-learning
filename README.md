@@ -97,3 +97,15 @@ MIT License — Free for all learners, educators, and dreamers.
 ---
 
 [![Neurodiversity Pride](https://img.shields.io/badge/Neurodiversity-Pride-brightgreen?style=flat-square)](https://en.wikipedia.org/wiki/Neurodiversity)
+
+
+## Accessibility & Keyboard Shortcuts
+Adaptive Learning adheres to WCAG 2.1 Level AA compliance. Use keyboard shortcuts:
+
+| Shortcut | Description | Target Section |
+| :--- | :--- | :--- |
+| `Alt + 1` | Jump to Primary Learning Feed | `#main-content` |
+| `Alt + 2` | Focus Interactive AI Tutor Pane | `#tutor-chat` |
+| `Alt + 3` | Jump directly to Knowledge Check Quiz | `#quiz-section` |
+| `Alt + 0` | Toggle High-Contrast & Font Adjustments | `#accessibility-panel` |
+| `Escape`  | Exit Active Quiz / Dismiss Modals | Active Overlay |
