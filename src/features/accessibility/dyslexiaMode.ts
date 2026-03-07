@@ -12,3 +12,10 @@ export const OPENDYSLEXIC_CONFIG: DyslexiaConfig = {
   wordSpacing: '0.16em',
   lineHeight: '1.8'
 };
+
+export function enableDyslexiaFont(target: HTMLElement = document.body): void {
+  target.classList.add('dyslexia-mode-active');
+  target.style.fontFamily = OPENDYSLEXIC_CONFIG.fontFamily;
+  target.style.letterSpacing = OPENDYSLEXIC_CONFIG.letterSpacing;
+  target.style.wordSpacing = OPENDYSLEXIC_CONFIG.wordSpacing;
+}
