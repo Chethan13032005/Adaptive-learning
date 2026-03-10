@@ -19,3 +19,10 @@ export function enableDyslexiaFont(target: HTMLElement = document.body): void {
   target.style.letterSpacing = OPENDYSLEXIC_CONFIG.letterSpacing;
   target.style.wordSpacing = OPENDYSLEXIC_CONFIG.wordSpacing;
 }
+
+export function disableDyslexiaFont(target: HTMLElement = document.body): void {
+  target.classList.remove('dyslexia-mode-active');
+  target.style.fontFamily = '';
+  target.style.letterSpacing = '';
+  target.style.wordSpacing = '';
+}
