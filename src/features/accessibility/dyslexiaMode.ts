@@ -26,3 +26,7 @@ export function disableDyslexiaFont(target: HTMLElement = document.body): void {
   target.style.letterSpacing = '';
   target.style.wordSpacing = '';
 }
+
+export function isDyslexiaFontActive(target: HTMLElement = document.body): boolean {
+  return target.classList.contains('dyslexia-mode-active');
+}
