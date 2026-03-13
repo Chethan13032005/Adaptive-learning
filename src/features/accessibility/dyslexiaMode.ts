@@ -30,3 +30,9 @@ export function disableDyslexiaFont(target: HTMLElement = document.body): void {
 export function isDyslexiaFontActive(target: HTMLElement = document.body): boolean {
   return target.classList.contains('dyslexia-mode-active');
 }
+
+export function getBionicReadingSpans(word: string): string {
+  if (word.length <= 3) return `<b>${word}</b>`;
+  const mid = Math.ceil(word.length / 2);
+  return `<b>${word.slice(0, mid)}</b>${word.slice(mid)}`;
+}
