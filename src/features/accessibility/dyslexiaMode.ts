@@ -36,3 +36,7 @@ export function getBionicReadingSpans(word: string): string {
   const mid = Math.ceil(word.length / 2);
   return `<b>${word.slice(0, mid)}</b>${word.slice(mid)}`;
 }
+
+export function formatTextForDyslexia(rawText: string): string {
+  return rawText.split(' ').map(getBionicReadingSpans).join(' ');
+}
