@@ -40,3 +40,7 @@ export function getBionicReadingSpans(word: string): string {
 export function formatTextForDyslexia(rawText: string): string {
   return rawText.split(' ').map(getBionicReadingSpans).join(' ');
 }
+
+export function toggleLetterSpacing(target: HTMLElement, expand: boolean): void {
+  target.style.letterSpacing = expand ? '0.18em' : 'normal';
+}
