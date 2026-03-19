@@ -109,3 +109,10 @@ Adaptive Learning adheres to WCAG 2.1 Level AA compliance. Use keyboard shortcut
 | `Alt + 3` | Jump directly to Knowledge Check Quiz | `#quiz-section` |
 | `Alt + 0` | Toggle High-Contrast & Font Adjustments | `#accessibility-panel` |
 | `Escape`  | Exit Active Quiz / Dismiss Modals | Active Overlay |
+
+
+### Color & Display Themes
+Built-in display presets cater to neurodiverse learners and vision-impaired users:
+- **High Contrast Dark / Light**: Strict black & yellow/blue meeting 7:1 contrast ratios.
+- **Dyslexia Enhanced**: Cream background (`#F7F3E9`) with 2.0 line-spacing and widened character tracking.
+- **Calm Focus**: Muted grayscale rendering to prevent sensory overload during study sessions.
