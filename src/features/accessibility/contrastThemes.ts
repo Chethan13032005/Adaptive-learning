@@ -34,3 +34,7 @@ export const CONTRAST_THEMES: Record<string, ContrastTheme> = {
     border: '#757575'
   }
 };
+
+export function getAvailableThemes(): ContrastTheme[] {
+  return Object.values(CONTRAST_THEMES);
+}
