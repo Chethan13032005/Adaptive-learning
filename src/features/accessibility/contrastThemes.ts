@@ -38,3 +38,12 @@ export const CONTRAST_THEMES: Record<string, ContrastTheme> = {
 export function getAvailableThemes(): ContrastTheme[] {
   return Object.values(CONTRAST_THEMES);
 }
+
+export function applyHighContrastDark(target: HTMLElement = document.documentElement): void {
+  const theme = CONTRAST_THEMES.highContrastDark;
+  target.style.setProperty('--bg-primary', theme.background);
+  target.style.setProperty('--text-primary', theme.foreground);
+  target.style.setProperty('--accent-color', theme.accent);
+  target.classList.add('theme-hc-dark');
+  target.classList.remove('theme-hc-light', 'theme-mono');
+}
