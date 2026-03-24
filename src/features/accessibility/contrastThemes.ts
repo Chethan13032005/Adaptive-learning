@@ -47,3 +47,12 @@ export function applyHighContrastDark(target: HTMLElement = document.documentEle
   target.classList.add('theme-hc-dark');
   target.classList.remove('theme-hc-light', 'theme-mono');
 }
+
+export function applyHighContrastLight(target: HTMLElement = document.documentElement): void {
+  const theme = CONTRAST_THEMES.highContrastLight;
+  target.style.setProperty('--bg-primary', theme.background);
+  target.style.setProperty('--text-primary', theme.foreground);
+  target.style.setProperty('--accent-color', theme.accent);
+  target.classList.add('theme-hc-light');
+  target.classList.remove('theme-hc-dark', 'theme-mono');
+}
