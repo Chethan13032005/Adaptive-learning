@@ -65,3 +65,12 @@ export function applyMonochrome(target: HTMLElement = document.documentElement):
   target.classList.add('theme-mono');
   target.classList.remove('theme-hc-dark', 'theme-hc-light');
 }
+
+export function getLuminance(hexColor: string): number {
+  const hex = hexColor.replace('#', '');
+  const r = parseInt(hex.substr(0, 2), 16) / 255;
+  const g = parseInt(hex.substr(2, 2), 16) / 255;
+  const b = parseInt(hex.substr(4, 2), 16) / 255;
+  const a = [r, g, b].map(v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+}
