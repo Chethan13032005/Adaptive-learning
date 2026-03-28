@@ -74,3 +74,14 @@ export function getLuminance(hexColor: string): number {
   const a = [r, g, b].map(v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
   return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
 }
+
+export function validateContrastRatio(c1: string, c2: string): { ratio: number; meetsAA: boolean; meetsAAA: boolean } {
+  const l1 = getLuminance(c1);
+  const l2 = getLuminance(c2);
+  const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  return {
+    ratio: parseFloat(ratio.toFixed(2)),
+    meetsAA: ratio >= 4.5,
+    meetsAAA: ratio >= 7.0
+  };
+}
