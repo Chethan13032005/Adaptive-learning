@@ -116,3 +116,16 @@ Built-in display presets cater to neurodiverse learners and vision-impaired user
 - **High Contrast Dark / Light**: Strict black & yellow/blue meeting 7:1 contrast ratios.
 - **Dyslexia Enhanced**: Cream background (`#F7F3E9`) with 2.0 line-spacing and widened character tracking.
 - **Calm Focus**: Muted grayscale rendering to prevent sensory overload during study sessions.
+
+
+## Architecture Flow
+```mermaid
+graph TD
+    User([Learner Query]) --> Router{Network Online?}
+    Router -- Yes --> CloudAI[Cloud AI Tutor API]
+    Router -- No --> Cache[Local Offline Tutor Cache]
+    Cache --> Fallback[Structured Topic Prompt Handlers]
+    CloudAI --> Sync[Sync Response to Cache]
+    Fallback --> UI[Accessible Reader UI]
+    Sync --> UI
+```
