@@ -15,3 +15,10 @@ export function prefersReducedMotion(): boolean {
   if (typeof window === 'undefined' || !window.matchMedia) return false;
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
+
+export function disableCSSAnimations(target: HTMLElement = document.documentElement): void {
+  target.classList.add('reduce-motion');
+  const style = target.style;
+  style.setProperty('--animation-duration', '0.001s');
+  style.setProperty('--transition-duration', '0.001s');
+}
