@@ -22,3 +22,9 @@ export function disableCSSAnimations(target: HTMLElement = document.documentElem
   style.setProperty('--animation-duration', '0.001s');
   style.setProperty('--transition-duration', '0.001s');
 }
+
+export function enableSafeTransitions(target: HTMLElement = document.documentElement): void {
+  target.classList.remove('reduce-motion');
+  target.style.removeProperty('--animation-duration');
+  target.style.removeProperty('--transition-duration');
+}
