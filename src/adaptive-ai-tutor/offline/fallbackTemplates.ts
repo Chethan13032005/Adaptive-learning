@@ -21,5 +21,19 @@ export const STEM_TEMPLATES: Record<string, FallbackTemplate> = {
     summary: 'Newtonian mechanics, conservation of energy and momentum, electric fields, and Maxwell equations.',
     keyConcepts: ['Conservation of linear momentum', 'Work-energy theorem', 'Gauss law for electricity', 'Faraday induction'],
     sampleQuestions: ['Explain Lenz law with an induced current example.', 'What is escape velocity formula derivation?']
+  },
+  chemistry: {
+    topic: 'Organic & Inorganic Chemistry',
+    category: 'STEM',
+    summary: 'Atomic structures, periodic periodic trends, chemical equilibrium, and organic reaction mechanisms.',
+    keyConcepts: ['Electronegativity trends', 'Le Chatelier principle', 'SN1 vs SN2 nucleophilic substitution', 'Gibbs free energy spontaneity'],
+    sampleQuestions: ['Why are tertiary carbocations more stable?', 'How does temperature affect exothermic equilibrium?']
+  },
+  biology: {
+    topic: 'Cellular Biology & Genetics',
+    category: 'STEM',
+    summary: 'Cellular respiration, DNA replication, transcription, translation, and Mendelian inheritance patterns.',
+    keyConcepts: ['ATP synthase in mitochondria', 'Central dogma of molecular biology', 'Meiosis vs mitosis', 'Polygenic traits'],
+    sampleQuestions: ['What occurs during the electron transport chain?', 'How does CRISPR-Cas9 locate target DNA sequences?']
   }
 };
