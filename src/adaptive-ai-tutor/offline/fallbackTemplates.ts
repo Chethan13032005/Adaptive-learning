@@ -35,5 +35,12 @@ export const STEM_TEMPLATES: Record<string, FallbackTemplate> = {
     summary: 'Cellular respiration, DNA replication, transcription, translation, and Mendelian inheritance patterns.',
     keyConcepts: ['ATP synthase in mitochondria', 'Central dogma of molecular biology', 'Meiosis vs mitosis', 'Polygenic traits'],
     sampleQuestions: ['What occurs during the electron transport chain?', 'How does CRISPR-Cas9 locate target DNA sequences?']
+  },
+  computerScience: {
+    topic: 'Computer Science & Algorithms',
+    category: 'STEM',
+    summary: 'Asymptotic notation, sorting algorithms, graphs, dynamic programming, and memory allocation.',
+    keyConcepts: ['Big-O complexity', 'Dijkstra shortest path', 'Dynamic programming memoization', 'Binary search trees'],
+    sampleQuestions: ['Explain the time complexity difference between QuickSort and MergeSort.', 'How does garbage collection work in V8?']
   }
 };
