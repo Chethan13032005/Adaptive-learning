@@ -44,3 +44,13 @@ export const STEM_TEMPLATES: Record<string, FallbackTemplate> = {
     sampleQuestions: ['Explain the time complexity difference between QuickSort and MergeSort.', 'How does garbage collection work in V8?']
   }
 };
+
+export const HUMANITIES_TEMPLATES: Record<string, FallbackTemplate> = {
+  history: {
+    topic: 'World History & Modern Civilizations',
+    category: 'Humanities',
+    summary: 'Major global turning points including the Industrial Revolution, world wars, and post-colonial self-determination.',
+    keyConcepts: ['Causes of World War I', 'Impact of the steam engine on labor', 'Decolonization movements', 'Cold War geopolitics'],
+    sampleQuestions: ['What were the key socio-economic drivers of the Industrial Revolution?', 'How did the Treaty of Versailles influence 20th century Europe?']
+  }
+};
