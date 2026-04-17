@@ -52,5 +52,12 @@ export const HUMANITIES_TEMPLATES: Record<string, FallbackTemplate> = {
     summary: 'Major global turning points including the Industrial Revolution, world wars, and post-colonial self-determination.',
     keyConcepts: ['Causes of World War I', 'Impact of the steam engine on labor', 'Decolonization movements', 'Cold War geopolitics'],
     sampleQuestions: ['What were the key socio-economic drivers of the Industrial Revolution?', 'How did the Treaty of Versailles influence 20th century Europe?']
+  },
+  englishLit: {
+    topic: 'English Literature & Rhetoric',
+    category: 'Language',
+    summary: 'Literary devices, critical analysis, narrative structures, and syntactic techniques in prose and poetry.',
+    keyConcepts: ['Metaphor vs Metonymy', 'Dramatic irony', 'Stream of consciousness narrative', 'Rhetorical appeals: Ethos, Pathos, Logos'],
+    sampleQuestions: ['How does Shakespeare use dramatic irony in Macbeth?', 'What distinguishes a thesis statement from a topic sentence?']
   }
 };
