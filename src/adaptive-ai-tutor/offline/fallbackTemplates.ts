@@ -59,5 +59,12 @@ export const HUMANITIES_TEMPLATES: Record<string, FallbackTemplate> = {
     summary: 'Literary devices, critical analysis, narrative structures, and syntactic techniques in prose and poetry.',
     keyConcepts: ['Metaphor vs Metonymy', 'Dramatic irony', 'Stream of consciousness narrative', 'Rhetorical appeals: Ethos, Pathos, Logos'],
     sampleQuestions: ['How does Shakespeare use dramatic irony in Macbeth?', 'What distinguishes a thesis statement from a topic sentence?']
+  },
+  economics: {
+    topic: 'Microeconomics & Macroeconomics',
+    category: 'Humanities',
+    summary: 'Supply and demand equilibrium, fiscal and monetary policies, inflation, and market structures.',
+    keyConcepts: ['Elasticity of demand', 'Monopolistic competition vs oligopoly', 'GDP calculation methods', 'Central bank interest rate transmission'],
+    sampleQuestions: ['How does quantitative easing stimulate the economy?', 'What causes deadweight loss in price-ceiling situations?']
   }
 };
