@@ -129,3 +129,10 @@ graph TD
     Fallback --> UI[Accessible Reader UI]
     Sync --> UI
 ```
+
+
+### Adaptive Quiz & Hint Ladder System
+Quizzes dynamically compute scores based on hint usage:
+- **Level 1 (Concept Cue)**: 10% penalty. Provides contextual reminder.
+- **Level 2 (Exclusion Clue)**: 25% penalty. Eliminates common distractors.
+- **Level 3 (Direct Lead)**: 50% penalty. Discloses first letter and length hints.
