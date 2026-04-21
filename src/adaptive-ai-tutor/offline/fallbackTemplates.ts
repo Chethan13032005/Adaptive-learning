@@ -66,5 +66,12 @@ export const HUMANITIES_TEMPLATES: Record<string, FallbackTemplate> = {
     summary: 'Supply and demand equilibrium, fiscal and monetary policies, inflation, and market structures.',
     keyConcepts: ['Elasticity of demand', 'Monopolistic competition vs oligopoly', 'GDP calculation methods', 'Central bank interest rate transmission'],
     sampleQuestions: ['How does quantitative easing stimulate the economy?', 'What causes deadweight loss in price-ceiling situations?']
+  },
+  geography: {
+    topic: 'Physical Geography & Geomorphology',
+    category: 'Humanities',
+    summary: 'Plate tectonics, atmospheric circulation, climate zones, and river basin landforms.',
+    keyConcepts: ['Subduction zones and seismic activity', 'Hadley cells and trade winds', 'Koppen climate classification', 'Glacial vs fluvial erosion'],
+    sampleQuestions: ['How do tectonic plate boundaries create volcanic island arcs?', 'Explain the rain shadow effect with orographic precipitation.']
   }
 };
