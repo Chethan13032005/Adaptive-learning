@@ -73,5 +73,12 @@ export const HUMANITIES_TEMPLATES: Record<string, FallbackTemplate> = {
     summary: 'Plate tectonics, atmospheric circulation, climate zones, and river basin landforms.',
     keyConcepts: ['Subduction zones and seismic activity', 'Hadley cells and trade winds', 'Koppen climate classification', 'Glacial vs fluvial erosion'],
     sampleQuestions: ['How do tectonic plate boundaries create volcanic island arcs?', 'Explain the rain shadow effect with orographic precipitation.']
+  },
+  environmentalScience: {
+    topic: 'Environmental Science & Sustainability',
+    category: 'STEM',
+    summary: 'Biogeochemical cycles, ecosystem trophic cascades, renewable energy transitions, and biodiversity conservation.',
+    keyConcepts: ['Carbon and nitrogen cycles', 'Ocean acidification from CO2 absorption', 'Keystone species ecological role', 'Photovoltaic and wind capacity factors'],
+    sampleQuestions: ['How does eutrophication cause hypoxic dead zones?', 'What is the difference between point and non-point source pollution?']
   }
 };
