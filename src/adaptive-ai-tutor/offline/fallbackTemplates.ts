@@ -80,5 +80,12 @@ export const HUMANITIES_TEMPLATES: Record<string, FallbackTemplate> = {
     summary: 'Biogeochemical cycles, ecosystem trophic cascades, renewable energy transitions, and biodiversity conservation.',
     keyConcepts: ['Carbon and nitrogen cycles', 'Ocean acidification from CO2 absorption', 'Keystone species ecological role', 'Photovoltaic and wind capacity factors'],
     sampleQuestions: ['How does eutrophication cause hypoxic dead zones?', 'What is the difference between point and non-point source pollution?']
+  },
+  logicReasoning: {
+    topic: 'Formal Logic & Deductive Reasoning',
+    category: 'General',
+    summary: 'Propositional calculus, logical fallacies, categorical syllogisms, and truth tables.',
+    keyConcepts: ['Modus Ponens and Modus Tollens', 'Ad hominem & straw man fallacies', 'Necessary vs sufficient conditions', 'Venn diagrams for valid deduction'],
+    sampleQuestions: ['Construct a truth table for (P -> Q) ^ ~Q.', 'Identify the formal fallacy in affirming the consequent.']
   }
 };
