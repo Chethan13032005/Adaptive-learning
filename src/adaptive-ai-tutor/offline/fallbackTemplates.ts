@@ -89,3 +89,14 @@ export const HUMANITIES_TEMPLATES: Record<string, FallbackTemplate> = {
     sampleQuestions: ['Construct a truth table for (P -> Q) ^ ~Q.', 'Identify the formal fallacy in affirming the consequent.']
   }
 };
+
+export const STUDY_TEMPLATES = {
+  activeRecall: {
+    method: 'Feynman Technique & Spaced Repetition',
+    instructions: '1. Choose a concept. 2. Explain it in plain terms as if to a 10-year old. 3. Identify gaps in your explanation. 4. Review source notes to simplify.'
+  },
+  pomodoro: {
+    method: 'Adaptive Interval Training',
+    instructions: 'Focus for 25 minutes, followed by a 5-minute break. After 4 intervals, take a 20-minute restorative break.'
+  }
+};
