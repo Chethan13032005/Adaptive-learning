@@ -100,3 +100,12 @@ export const STUDY_TEMPLATES = {
     instructions: 'Focus for 25 minutes, followed by a 5-minute break. After 4 intervals, take a 20-minute restorative break.'
   }
 };
+
+export const FORMULA_REFERENCE: Record<string, string> = {
+  quadraticFormula: 'x = (-b ± sqrt(b^2 - 4ac)) / (2a)',
+  pythagoreanTheorem: 'a^2 + b^2 = c^2',
+  idealGasLaw: 'PV = nRT',
+  einsteinMassEnergy: 'E = mc^2',
+  coulombLaw: 'F = k * (|q1 * q2|) / r^2',
+  eulerIdentity: 'e^(i*pi) + 1 = 0'
+};
