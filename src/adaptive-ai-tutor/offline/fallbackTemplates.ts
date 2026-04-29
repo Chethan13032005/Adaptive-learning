@@ -109,3 +109,7 @@ export const FORMULA_REFERENCE: Record<string, string> = {
   coulombLaw: 'F = k * (|q1 * q2|) / r^2',
   eulerIdentity: 'e^(i*pi) + 1 = 0'
 };
+
+export function getFallbackByTopic(topicKey: string): FallbackTemplate | null {
+  return STEM_TEMPLATES[topicKey] || HUMANITIES_TEMPLATES[topicKey] || null;
+}
