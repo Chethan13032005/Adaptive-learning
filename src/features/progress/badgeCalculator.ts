@@ -51,3 +51,11 @@ export function exportUserProgressReport(userId: string, accuracy: number, quizz
     badgeCount: (calculateStreakBadge(streak) ? 1 : 0) + (calculateAccuracyBadge([accuracy, accuracy, accuracy, accuracy, accuracy]) ? 1 : 0)
   }, null, 2);
 }
+
+
+// Streak Integration Helper
+export function calculateCombinedUserXP(completedQuizzes: number, streakDays: number): number {
+  const quizXP = completedQuizzes * 50;
+  const streakBonusXP = Math.min(streakDays * 20, 500);
+  return quizXP + streakBonusXP;
+}
