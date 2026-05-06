@@ -23,3 +23,15 @@ export function extractQueryTokens(prompt: string): string[] {
     .split(/\s+/)
     .filter(token => token.length > 2 && !STOPWORDS.has(token));
 }
+
+export function calculateTokenMatchScore(tokens: string[], candidateList: string[]): number {
+  if (tokens.length === 0 || candidateList.length === 0) return 0;
+  let matches = 0;
+  const candidateLower = candidateList.map(c => c.toLowerCase());
+  for (const t of tokens) {
+    if (candidateLower.some(c => c.includes(t) || t.includes(c))) {
+      matches += 1;
+    }
+  }
+  return matches / tokens.length;
+}
