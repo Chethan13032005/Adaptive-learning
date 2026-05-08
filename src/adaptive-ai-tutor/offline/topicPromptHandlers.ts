@@ -1,4 +1,6 @@
 // Topic Prompt Handlers for Offline Mode
+import { STEM_TEMPLATES, HUMANITIES_TEMPLATES, FallbackTemplate } from './fallbackTemplates';
+
 export interface ParsedPrompt {
   raw: string;
   intent: 'question' | 'explanation' | 'formula' | 'quiz' | 'study_tip';
@@ -34,4 +36,19 @@ export function calculateTokenMatchScore(tokens: string[], candidateList: string
     }
   }
   return matches / tokens.length;
+}
+
+export function matchCachedTopic(prompt: string): FallbackTemplate | null {
+  const tokens = extractQueryTokens(prompt);
+  const allTemplates: FallbackTemplate[] = [...Object.values(STEM_TEMPLATES), ...Object.values(HUMANITIES_TEMPLATES)];
+  let bestTemplate: FallbackTemplate | null = null;
+  let maxScore = 0;
+  for (const tmpl of allTemplates) {
+    const score = calculateTokenMatchScore(tokens, [tmpl.topic, ...tmpl.keyConcepts]);
+    if (score > maxScore && score > 0.15) {
+      maxScore = score;
+      bestTemplate = tmpl;
+    }
+  }
+  return bestTemplate;
 }
