@@ -52,3 +52,24 @@ export function matchCachedTopic(prompt: string): FallbackTemplate | null {
   }
   return bestTemplate;
 }
+
+export function generateOfflineResponse(prompt: string): { reply: string; source: string; isOfflineFallback: boolean } {
+  const template = matchCachedTopic(prompt);
+  if (!template) {
+    return {
+      reply: 'You are currently in offline mode. For full generative AI reasoning, please reconnect to the network. Try asking about Calculus, Physics, Chemistry, Biology, History, or Algorithms.',
+      source: 'offline_generic',
+      isOfflineFallback: true
+    };
+  }
+  const reply = `[Offline AI Tutor - ${template.topic}]
+${template.summary}
+
+Key Concepts:
+- ${template.keyConcepts.join('\n- ')}`;
+  return {
+    reply,
+    source: template.topic,
+    isOfflineFallback: true
+  };
+}
