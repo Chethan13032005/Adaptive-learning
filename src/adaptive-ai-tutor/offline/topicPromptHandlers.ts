@@ -73,3 +73,9 @@ Key Concepts:
     isOfflineFallback: true
   };
 }
+
+export function scoreConfidenceLevel(matchedTemplate: FallbackTemplate | null, queryLength: number): number {
+  if (!matchedTemplate) return 0.2;
+  if (queryLength > 20) return 0.85;
+  return 0.65;
+}
