@@ -79,3 +79,7 @@ export function scoreConfidenceLevel(matchedTemplate: FallbackTemplate | null, q
   if (queryLength > 20) return 0.85;
   return 0.65;
 }
+
+export function logFallbackDegradation(reason: string, query: string): void {
+  console.info(`[OfflineTelemetry] Fallback triggered. Reason: ${reason} | Query: "${query.slice(0, 40)}..."`);
+}
