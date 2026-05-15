@@ -1,0 +1,31 @@
+// Structured Quiz Question Banks
+export interface QuizQuestion {
+  id: string;
+  topic: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  question: string;
+  options: string[];
+  correctAnswerIndex: number;
+  explanation: string;
+}
+
+export const MATH_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 'm-calc-001',
+    topic: 'Calculus',
+    difficulty: 'medium',
+    question: 'What is the derivative of f(x) = ln(3x^2)?',
+    options: ['2/x', '6x', '1/(3x^2)', '3/x'],
+    correctAnswerIndex: 0,
+    explanation: 'By the chain rule: d/dx[ln(u)] = u'/u. Here u = 3x^2, u' = 6x, so (6x)/(3x^2) = 2/x.'
+  },
+  {
+    id: 'm-alg-002',
+    topic: 'Algebra',
+    difficulty: 'easy',
+    question: 'Solve for x: 2^(2x) = 64.',
+    options: ['x = 2', 'x = 3', 'x = 4', 'x = 6'],
+    correctAnswerIndex: 1,
+    explanation: '64 is 2^6. Thus 2x = 6, yielding x = 3.'
+  }
+];
