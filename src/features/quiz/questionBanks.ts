@@ -29,3 +29,15 @@ export const MATH_QUESTIONS: QuizQuestion[] = [
     explanation: '64 is 2^6. Thus 2x = 6, yielding x = 3.'
   }
 ];
+
+export const PHYSICS_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 'p-mech-001',
+    topic: 'Mechanics',
+    difficulty: 'hard',
+    question: 'A mass m attached to a spring of spring constant k oscillates. What is its angular frequency omega?',
+    options: ['sqrt(m/k)', 'sqrt(k/m)', '2*pi*sqrt(k/m)', 'k/m'],
+    correctAnswerIndex: 1,
+    explanation: 'The natural angular frequency of a simple harmonic oscillator is omega = sqrt(k/m).'
+  }
+];
