@@ -50,3 +50,18 @@ export function saveFontPreference(scale: number): void {
     console.warn('Failed to save font scale preference to localStorage', err);
   }
 }
+
+
+// Persistent Font Scaling Controller
+export function initFontScaleListener(): void {
+  const saved = localStorage.getItem('adaptive_font_scale');
+  if (saved) {
+    document.documentElement.style.fontSize = `${saved}%`;
+  }
+}
+
+export function setAndPersistScale(percent: number): void {
+  const bounded = Math.max(80, Math.min(220, percent));
+  document.documentElement.style.fontSize = `${bounded}%`;
+  localStorage.setItem('adaptive_font_scale', bounded.toString());
+}
