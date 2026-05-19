@@ -41,3 +41,15 @@ export const PHYSICS_QUESTIONS: QuizQuestion[] = [
     explanation: 'The natural angular frequency of a simple harmonic oscillator is omega = sqrt(k/m).'
   }
 ];
+
+export const CHEMISTRY_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 'c-org-001',
+    topic: 'Organic Chemistry',
+    difficulty: 'medium',
+    question: 'Which reagent converts primary alcohols selectively to aldehydes without over-oxidation?',
+    options: ['KMnO4', 'PCC (Pyridinium chlorochromate)', 'LiAlH4', 'H2SO4'],
+    correctAnswerIndex: 1,
+    explanation: 'PCC in dichloromethane gently oxidizes primary alcohols to aldehydes without continuing to carboxylic acids.'
+  }
+];
