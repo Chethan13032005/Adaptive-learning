@@ -53,3 +53,15 @@ export const CHEMISTRY_QUESTIONS: QuizQuestion[] = [
     explanation: 'PCC in dichloromethane gently oxidizes primary alcohols to aldehydes without continuing to carboxylic acids.'
   }
 ];
+
+export const CS_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 'cs-algo-001',
+    topic: 'Algorithms',
+    difficulty: 'easy',
+    question: 'What is the worst-case time complexity of binary search over a sorted array of size n?',
+    options: ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)'],
+    correctAnswerIndex: 1,
+    explanation: 'Binary search halves the search space each step, requiring at most log2(n) comparisons.'
+  }
+];
