@@ -65,3 +65,10 @@ export const CS_QUESTIONS: QuizQuestion[] = [
     explanation: 'Binary search halves the search space each step, requiring at most log2(n) comparisons.'
   }
 ];
+
+export const ALL_QUESTIONS: QuizQuestion[] = [
+  ...MATH_QUESTIONS,
+  ...PHYSICS_QUESTIONS,
+  ...CHEMISTRY_QUESTIONS,
+  ...CS_QUESTIONS
+];
