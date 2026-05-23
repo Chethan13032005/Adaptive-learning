@@ -72,3 +72,7 @@ export const ALL_QUESTIONS: QuizQuestion[] = [
   ...CHEMISTRY_QUESTIONS,
   ...CS_QUESTIONS
 ];
+
+export function filterQuestionsByDifficulty(questions: QuizQuestion[], difficulty: QuizQuestion['difficulty']): QuizQuestion[] {
+  return questions.filter(q => q.difficulty === difficulty);
+}
