@@ -76,3 +76,8 @@ export const ALL_QUESTIONS: QuizQuestion[] = [
 export function filterQuestionsByDifficulty(questions: QuizQuestion[], difficulty: QuizQuestion['difficulty']): QuizQuestion[] {
   return questions.filter(q => q.difficulty === difficulty);
 }
+
+export function getRandomQuestionSet(pool: QuizQuestion[], count: number): QuizQuestion[] {
+  const shuffled = [...pool].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, Math.min(count, pool.length));
+}
