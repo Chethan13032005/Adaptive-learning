@@ -17,3 +17,7 @@ export const HINT_REGISTRY: Record<string, HintTiers> = {
     tier3: 'Set 2x = 6 and divide by 2.'
   }
 };
+
+export function getTierOneHint(questionId: string): string {
+  return HINT_REGISTRY[questionId]?.tier1 || 'Think carefully about the foundational definitions of the topic.';
+}
