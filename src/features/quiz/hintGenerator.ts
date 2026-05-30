@@ -21,3 +21,7 @@ export const HINT_REGISTRY: Record<string, HintTiers> = {
 export function getTierOneHint(questionId: string): string {
   return HINT_REGISTRY[questionId]?.tier1 || 'Think carefully about the foundational definitions of the topic.';
 }
+
+export function getTierTwoHint(questionId: string): string {
+  return HINT_REGISTRY[questionId]?.tier2 || 'Consider which governing rule or law applies to this setup.';
+}
