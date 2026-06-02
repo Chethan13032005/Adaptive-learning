@@ -25,3 +25,7 @@ export function getTierOneHint(questionId: string): string {
 export function getTierTwoHint(questionId: string): string {
   return HINT_REGISTRY[questionId]?.tier2 || 'Consider which governing rule or law applies to this setup.';
 }
+
+export function getTierThreeHint(questionId: string): string {
+  return HINT_REGISTRY[questionId]?.tier3 || 'Check the formula reference table for exact mathematical steps.';
+}
