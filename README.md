@@ -136,3 +136,8 @@ Quizzes dynamically compute scores based on hint usage:
 - **Level 1 (Concept Cue)**: 10% penalty. Provides contextual reminder.
 - **Level 2 (Exclusion Clue)**: 25% penalty. Eliminates common distractors.
 - **Level 3 (Direct Lead)**: 50% penalty. Discloses first letter and length hints.
+
+
+### Pre-installed Offline Curricula
+- **STEM Module**: Cellular Biology, Classical Mechanics, Chemical Bonding.
+- **Zero-Latency Execution**: Instant quiz validation with zero server dependencies.
