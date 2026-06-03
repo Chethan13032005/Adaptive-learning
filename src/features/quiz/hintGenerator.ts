@@ -29,3 +29,11 @@ export function getTierTwoHint(questionId: string): string {
 export function getTierThreeHint(questionId: string): string {
   return HINT_REGISTRY[questionId]?.tier3 || 'Check the formula reference table for exact mathematical steps.';
 }
+
+export function calculateHintScorePenalty(tierUsed: 1 | 2 | 3): number {
+  switch (tierUsed) {
+    case 1: return 0.1;  // 10% penalty
+    case 2: return 0.25; // 25% penalty
+    case 3: return 0.50; // 50% penalty
+  }
+}
