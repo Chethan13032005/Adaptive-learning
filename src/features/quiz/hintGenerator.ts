@@ -37,3 +37,15 @@ export function calculateHintScorePenalty(tierUsed: 1 | 2 | 3): number {
     case 3: return 0.50; // 50% penalty
   }
 }
+
+export function trackHintUsage(questionId: string, tier: 1 | 2 | 3): void {
+  const auditKey = 'a11y_quiz_hint_audit';
+  try {
+    const raw = localStorage.getItem(auditKey) || '[]';
+    const audit = JSON.parse(raw);
+    audit.push({ questionId, tier, timestamp: new Date().toISOString() });
+    localStorage.setItem(auditKey, JSON.stringify(audit));
+  } catch (e) {
+    // Graceful no-op in non-browser context
+  }
+}
