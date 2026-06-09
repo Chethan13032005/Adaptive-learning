@@ -14,3 +14,10 @@ export const BADGE_DEFINITIONS: Record<string, Badge> = {
   accuracy_sharpshooter: { id: 'accuracy_sharpshooter', name: 'Sharpshooter', icon: '🎯', description: 'Scored 90%+ in 5 consecutive quizzes.' },
   speed_lightning: { id: 'speed_lightning', name: 'Quick Thinker', icon: '⚡', description: 'Answered 10 questions under 15s each.' }
 };
+
+export function calculateStreakBadge(currentStreakDays: number): Badge | null {
+  if (currentStreakDays >= 30) return BADGE_DEFINITIONS.streak_gold;
+  if (currentStreakDays >= 7) return BADGE_DEFINITIONS.streak_silver;
+  if (currentStreakDays >= 3) return BADGE_DEFINITIONS.streak_bronze;
+  return null;
+}
