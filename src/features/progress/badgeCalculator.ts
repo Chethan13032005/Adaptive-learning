@@ -21,3 +21,10 @@ export function calculateStreakBadge(currentStreakDays: number): Badge | null {
   if (currentStreakDays >= 3) return BADGE_DEFINITIONS.streak_bronze;
   return null;
 }
+
+export function calculateAccuracyBadge(recentScores: number[]): Badge | null {
+  if (recentScores.length < 5) return null;
+  const last5 = recentScores.slice(-5);
+  const average = last5.reduce((sum, s) => sum + s, 0) / 5;
+  return average >= 90 ? BADGE_DEFINITIONS.accuracy_sharpshooter : null;
+}
