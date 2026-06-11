@@ -28,3 +28,7 @@ export function calculateAccuracyBadge(recentScores: number[]): Badge | null {
   const average = last5.reduce((sum, s) => sum + s, 0) / 5;
   return average >= 90 ? BADGE_DEFINITIONS.accuracy_sharpshooter : null;
 }
+
+export function calculateSpeedBadge(averageResponseTimeSec: number): Badge | null {
+  return averageResponseTimeSec <= 15 ? BADGE_DEFINITIONS.speed_lightning : null;
+}
