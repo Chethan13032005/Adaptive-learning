@@ -32,3 +32,12 @@ export function calculateAccuracyBadge(recentScores: number[]): Badge | null {
 export function calculateSpeedBadge(averageResponseTimeSec: number): Badge | null {
   return averageResponseTimeSec <= 15 ? BADGE_DEFINITIONS.speed_lightning : null;
 }
+
+export function calculateMasteryScore(accuracy: number, quizzesTaken: number, streak: number): number {
+  const accuracyWeight = 0.6;
+  const volumeWeight = 0.25;
+  const streakWeight = 0.15;
+  const normalizedVolume = Math.min(100, quizzesTaken * 5);
+  const normalizedStreak = Math.min(100, streak * 10);
+  return Math.round(accuracy * accuracyWeight + normalizedVolume * volumeWeight + normalizedStreak * streakWeight);
+}
