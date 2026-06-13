@@ -41,3 +41,13 @@ export function calculateMasteryScore(accuracy: number, quizzesTaken: number, st
   const normalizedStreak = Math.min(100, streak * 10);
   return Math.round(accuracy * accuracyWeight + normalizedVolume * volumeWeight + normalizedStreak * streakWeight);
 }
+
+export function exportUserProgressReport(userId: string, accuracy: number, quizzes: number, streak: number): string {
+  const mastery = calculateMasteryScore(accuracy, quizzes, streak);
+  return JSON.stringify({
+    userId,
+    generatedAt: new Date().toISOString(),
+    metrics: { accuracy, quizzes, streak, masteryScore: mastery },
+    badgeCount: (calculateStreakBadge(streak) ? 1 : 0) + (calculateAccuracyBadge([accuracy, accuracy, accuracy, accuracy, accuracy]) ? 1 : 0)
+  }, null, 2);
+}
