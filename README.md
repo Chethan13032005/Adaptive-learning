@@ -141,3 +141,11 @@ Quizzes dynamically compute scores based on hint usage:
 ### Pre-installed Offline Curricula
 - **STEM Module**: Cellular Biology, Classical Mechanics, Chemical Bonding.
 - **Zero-Latency Execution**: Instant quiz validation with zero server dependencies.
+
+
+## Development & Extension Guide
+To extend accessibility themes or quiz categories:
+1. Register new theme objects in `src/features/accessibility/presets.ts`.
+2. Add offline curricula to `src/features/quiz/stemQuestionBank.ts`.
+3. Verify keyboard accessibility hooks via `KeyboardNavManager`.
+4. Deploy static bundle directly to GitHub Pages or static host.
