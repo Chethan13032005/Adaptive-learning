@@ -1,151 +1,158 @@
+
 # Adaptive Neurodiverse AI Tutor
 
+An adaptive learning prototype designed to explore multimodal teaching, personalized lesson presentation, learner engagement signals, and gamified peer interactions for neurodiverse learners.
+
 ## Overview
-The Adaptive Neurodiverse AI Tutor is an innovative educational tool designed to provide personalized learning experiences for neurodiverse learners. By leveraging advanced AI techniques, this tutor adapts its teaching methods to suit individual preferences and needs, ensuring an engaging and effective learning journey.
 
-## Features
+Adaptive Neurodiverse AI Tutor explores how learning content can be adapted to different learner preferences through audio, visual, and structured-text presentation.
 
-- Multi-modal teaching agent (audio, visual, structured)
-- Emotion & engagement sensing (basic demo)
-- Gamified peer agent (AI buddy)
+The prototype combines external educational content retrieval, optional Hugging Face inference, lightweight engagement classification, and a conversational peer-learning agent.
 
-## Usage
+## Key Features
 
-1. Install dependencies:  
-   npm install
+- **Multimodal Learning:** Supports audio, visual, and structured-text lesson presentation.
+- **Educational Content Retrieval:** Fetches topic summaries through the Wikipedia REST API.
+- **AI Integration:** Integrates Hugging Face inference for text-to-speech generation.
+- **Engagement Classification:** Uses response time and sentiment inputs to classify learner engagement.
+- **Peer Learning Agent:** Provides question-based interactions and collaborative puzzle prompts.
+- **Extensible Architecture:** Separates teaching, engagement analysis, and peer interaction into feature modules.
 
-# 🌈 Adaptive AI Tutor
+## Tech Stack
 
-Empowering neurodiverse learners with personalized, agentic AI-powered education.
+| Category | Technologies |
+|---|---|
+| Language | TypeScript |
+| Runtime | Node.js |
+| Server | Express.js (imported in source) |
+| AI Integration | Hugging Face Inference |
+| HTTP Client | node-fetch |
+| Educational Content | Wikipedia REST API |
+| Development Tools | ts-node, TypeScript |
 
----
+## Project Structure
 
-![Adaptive AI Tutor Banner](https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=800&q=80)
-
-## 🚀 Features
-
-- *Multi-Modal Lessons:* Visual, audio, video, simulation, and structured content for every learning style.
-- *Agentic AI Chat:* Always-on, robust AI tutor chat with fallback and smart answers—no dead ends!
-- *Gamified Peer Buddy:* Play games and take quizzes with instant feedback and scoring.
-- *Progress Dashboard:* Track achievements, badges, and points with beautiful animations.
-- *Accessibility First:* 10+ accessibility controls—font, color, contrast, spacing, cursor, and more.
-- *Theme & Personalization:* Dark mode, high contrast, dyslexia font, and more for every user.
-- *Seamless Animations:* Modern UI with smooth transitions and engaging effects.
-- *No API Key Required:* Uses public/free AI endpoints and local fallback for always-available answers.
-
----
-
-## ✨ Accessibility Highlights
-
-- Change font size, family, and color themes
-- Toggle line/letter spacing, bold, shadow, and outline text
-- Underline links, large cursor, focus outline
-- No animations mode for sensitive users
-- All options apply site-wide and are keyboard accessible
-
----
-
-## 🧠 Tech Stack
-
-- *Frontend:* HTML, CSS, JavaScript
-- *Backend/Logic:* TypeScript (Node.js for controllers/features)
-- *AI Integration:* OpenAI, HuggingFace, public APIs, local fallback
-- *Games & Simulations:* PhET, Math Playground, TurtleDiary, and more
-
----
-
-## 📚 How to Use
-
-1. *Clone the repo:*
-   sh
-   git clone https://github.com/Chethan13032005/Adaptive-learning.git
-   cd Adaptive-learning
-   
-2. *Open in VS Code or your favorite editor.*
-3. *Run with Live Server* (or open src/adaptive-ai-tutor/index.html in your browser).
-4. *Explore:*
-   - Try all features from the navigation bar
-   - Adjust accessibility settings in the Accessibility page
-   - Chat with the AI tutor, play games, and take quizzes
-
----
-
-## 💡 Example Pages
-
-- feature-multimodal.html — Core learning demo (AI chat, video, simulation, peer, hints)
-- feature-peer.html — Peer games and quizzes
-- feature-progress.html — Dashboard with achievements
-- feature-accessibility.html — 10+ accessibility controls
-- impact.html — Real user impact and reviews
-
----
-
-## 🌟 Contributing
-
-We welcome contributions! Please open issues or pull requests for new features, bug fixes, or accessibility improvements.
-
----
-
-## 🧩 License
-
-MIT License — Free for all learners, educators, and dreamers.
-
----
-
-> "Learning is for everyone. Make it your own!"
-
----
-
-[![Neurodiversity Pride](https://img.shields.io/badge/Neurodiversity-Pride-brightgreen?style=flat-square)](https://en.wikipedia.org/wiki/Neurodiversity)
-
-
-## Accessibility & Keyboard Shortcuts
-Adaptive Learning adheres to WCAG 2.1 Level AA compliance. Use keyboard shortcuts:
-
-| Shortcut | Description | Target Section |
-| :--- | :--- | :--- |
-| `Alt + 1` | Jump to Primary Learning Feed | `#main-content` |
-| `Alt + 2` | Focus Interactive AI Tutor Pane | `#tutor-chat` |
-| `Alt + 3` | Jump directly to Knowledge Check Quiz | `#quiz-section` |
-| `Alt + 0` | Toggle High-Contrast & Font Adjustments | `#accessibility-panel` |
-| `Escape`  | Exit Active Quiz / Dismiss Modals | Active Overlay |
-
-
-### Color & Display Themes
-Built-in display presets cater to neurodiverse learners and vision-impaired users:
-- **High Contrast Dark / Light**: Strict black & yellow/blue meeting 7:1 contrast ratios.
-- **Dyslexia Enhanced**: Cream background (`#F7F3E9`) with 2.0 line-spacing and widened character tracking.
-- **Calm Focus**: Muted grayscale rendering to prevent sensory overload during study sessions.
-
-
-## Architecture Flow
-```mermaid
-graph TD
-    User([Learner Query]) --> Router{Network Online?}
-    Router -- Yes --> CloudAI[Cloud AI Tutor API]
-    Router -- No --> Cache[Local Offline Tutor Cache]
-    Cache --> Fallback[Structured Topic Prompt Handlers]
-    CloudAI --> Sync[Sync Response to Cache]
-    Fallback --> UI[Accessible Reader UI]
-    Sync --> UI
+```text
+Adaptive-learning/
+│
+├── src/
+│   ├── app.ts
+│   │
+│   └── features/
+│       ├── multimodal-teaching/
+│       │   └── index.ts
+│       │
+│       ├── emotion-engagement-sensing/
+│       │   └── index.ts
+│       │
+│       └── gamified-peer-agent/
+│           └── index.ts
+│
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── README.md
+└── assets/
+    └── preview.png
 ```
 
+## Implementation Details
 
-### Adaptive Quiz & Hint Ladder System
-Quizzes dynamically compute scores based on hint usage:
-- **Level 1 (Concept Cue)**: 10% penalty. Provides contextual reminder.
-- **Level 2 (Exclusion Clue)**: 25% penalty. Eliminates common distractors.
-- **Level 3 (Direct Lead)**: 50% penalty. Discloses first letter and length hints.
+### 1. Multimodal Teaching Agent
+
+The teaching module retrieves educational summaries using the Wikipedia REST API and adapts the returned content according to learner preferences.
+
+Supported modes:
+
+- Audio: Text-to-speech through Hugging Face inference.
+- Visual: Markdown-formatted content with a visual-aid placeholder.
+- Structured: Structured-text lesson presentation.
+
+### 2. Engagement Analysis
+
+The engagement module evaluates response time and sentiment inputs.
+
+It classifies engagement into three categories:
+
+- Engaged
+- Frustrated
+- Distracted
+
+The current implementation uses rule-based classification rather than camera-based emotion recognition.
+
+### 3. Gamified Peer Agent
+
+The peer agent provides simple interactive learning prompts, including:
+
+- Topic-based questions.
+- Collaborative puzzle prompts.
+- Conversational peer-learning interactions.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Chethan13032005/Adaptive-learning.git
+
+cd Adaptive-learning
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Environment Configuration
+
+The teaching module optionally reads the following environment variable:
+
+```env
+HF_API_KEY=your_huggingface_api_key
+```
+
+Some Hugging Face inference endpoints may require authentication.
+
+### Available Commands
+
+```bash
+# Run the configured TypeScript application entry point
+npm start
+
+# Compile TypeScript
+npm run build
+```
+
+Note: The current repository has unresolved startup dependencies and imports that need to be addressed before these commands can be considered a verified working setup. See the repository audit below.
+
+## System Architecture
+
+<img width="600" height="400" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/6d82872c-43f4-4d31-bd0d-8a1cf09321c0" />
+
+## Illustrative Project Preview
+
+<img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/ef254659-ba14-44c5-8224-918f596d050d" />
 
 
-### Pre-installed Offline Curricula
-- **STEM Module**: Cellular Biology, Classical Mechanics, Chemical Bonding.
-- **Zero-Latency Execution**: Instant quiz validation with zero server dependencies.
+## Future Development
 
+Potential engineering improvements include:
 
-## Development & Extension Guide
-To extend accessibility themes or quiz categories:
-1. Register new theme objects in `src/features/accessibility/presets.ts`.
-2. Add offline curricula to `src/features/quiz/stemQuestionBank.ts`.
-3. Verify keyboard accessibility hooks via `KeyboardNavManager`.
-4. Deploy static bundle directly to GitHub Pages or static host.
+- Persistent learner profiles and learning history.
+- Performance-driven adaptive difficulty.
+- Expanded multimodal learning experiences.
+- More robust engagement analysis.
+- Interactive quizzes and measurable mastery tracking.
+- Automated testing and deployment.
+
+---
+
+**Project:** Adaptive Neurodiverse AI Tutor
+
+**Repository:** https://github.com/Chethan13032005/Adaptive-learning
